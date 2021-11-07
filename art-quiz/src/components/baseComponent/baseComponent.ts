@@ -1,4 +1,4 @@
-export class baseComponent{
+export class BaseComponent{
     protected readonly node:HTMLElement;
     constructor(parentNode:HTMLElement, className:string, tagName: keyof HTMLElementTagNameMap = 'div'){
         this.node = document.createElement(tagName);
