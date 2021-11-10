@@ -27,10 +27,11 @@ arrAnswerObj.push({right:true,answer:qst[rg]});
 
 for (let i = 0; i<3; i++){
     let tmp = getRandomNum(0,9);
-    while (tmp === rg){
+    while (tmp === rg || arrAnswerObj.find((item)=> item.answer === qst[tmp]) ){
         tmp = getRandomNum(0,9);
     }
     arrAnswerObj.push({right:false,answer:qst[tmp]});
+    
 };
 
 console.log(arrAnswerObj);
@@ -38,11 +39,12 @@ console.log(arrAnswerObj);
 arrAnswerObj = shuffle(arrAnswerObj);
 console.log(arrAnswerObj);
 
-let img = new Image();
-img.src = `./assets/img/${qst[rg].imageNum}.jpg`;
-img.alt = `${rg}`;
+let img = document.createElement('div');
+img.className = 'quest_img';
+img.style.cssText = `background-image:url(./assets/pictures/img/${qst[rg].imageNum}.jpg)`;
 
-quest.init([img],arrAnswerObj);
+
+quest.init(img,arrAnswerObj);
 
 document.body.append(quest.node);
 

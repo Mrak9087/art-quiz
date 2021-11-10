@@ -17,7 +17,15 @@
 
 .quest_images{
     width: 100%;
+    /* padding-top: 80%; */
+}
+
+.quest_img{
+    width: 100%;
     padding-top: 80%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .quest_images img{
@@ -29,4 +37,12 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.correct{
+    background-color: green;
+}
+
+.incorrect{
+    background-color: red;
 }

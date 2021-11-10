@@ -22,5 +22,8 @@
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "start": "webpack serve"
+  },
+  "dependencies": {
+    "copy-webpack-plugin": "^9.0.1"
   }
 }
