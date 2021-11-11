@@ -1,5 +1,6 @@
 import {images} from "./components/images";
 import { Quest } from "./components/quest/quest";
+import { Category } from "./components/category/category";
 
 const getRandomNum = (min:number, max:number):number => {
     let rand = min + Math.random() * (max + 1 - min);
@@ -27,7 +28,7 @@ arrAnswerObj.push({right:true,answer:qst[rg]});
 
 for (let i = 0; i<3; i++){
     let tmp = getRandomNum(0,9);
-    while (tmp === rg || arrAnswerObj.find((item)=> item.answer === qst[tmp]) ){
+    while (arrAnswerObj.find((item)=> item.answer === qst[tmp]) ){
         tmp = getRandomNum(0,9);
     }
     arrAnswerObj.push({right:false,answer:qst[tmp]});
@@ -47,6 +48,11 @@ img.style.cssText = `background-image:url(./assets/pictures/img/${qst[rg].imageN
 quest.init(img,arrAnswerObj);
 
 document.body.append(quest.node);
+
+let category1 = new Category(0);
+category1.init();
+document.body.append(category1.getQuests()[0].node);
+
 
 
 

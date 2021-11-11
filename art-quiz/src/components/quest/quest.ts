@@ -4,13 +4,14 @@ import { BaseComponent } from "../baseComponent/baseComponent";
 
 export class Quest extends BaseComponent{
     private answers: Answer[] = [];
-    private question: string;//Question;
+    private question: string = 'Кто автор картины?';//Question;
     private divTxt: HTMLElement;
     private questImages: HTMLElement;
     private questAnswer: HTMLElement;
+    private isAnswered:boolean = false;
     constructor(){
         super('quest');
-        this.question = 'quest1';
+        // this.question = 'quest1';
     }
 
     init(questImages:HTMLDivElement, arrAnswerObj:{right:boolean, answer:{author: string,name: string,year: string,imageNum: string}}[]):void{
@@ -25,20 +26,21 @@ export class Quest extends BaseComponent{
         this.questAnswer.className = 'answer_container';
         arrAnswerObj.forEach((item) => {
             const answerObj = new Answer(item.answer.author,item.right);
-            answerObj.node.addEventListener('click',()=>{
-                this.answerHandler(answerObj);
-            })
             this.answers.push(answerObj);
             this.questAnswer.append(answerObj.node);
         })
         this.node.append(this.divTxt,this.questImages,this.questAnswer);
     }
 
-    answerHandler(item:Answer){
-        if (item.getRight()){
-            item.node.classList.add('correct')
-        } else {
-            item.node.classList.add('incorrect')
-        }
+    answered():void{
+        this.isAnswered = true;
+    }
+
+    getAnswered():boolean{
+        return this.isAnswered;
+    }
+
+    getAnswers():Array<Answer>{
+        return this.answers;
     }
 }

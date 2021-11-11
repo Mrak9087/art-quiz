@@ -17,10 +17,13 @@
 
 .quest_images{
     width: 100%;
+    display: flex;
+    justify-content: center;
     /* padding-top: 80%; */
 }
 
 .quest_img{
+    max-width: 765px;
     width: 100%;
     padding-top: 80%;
     background-size: contain;
