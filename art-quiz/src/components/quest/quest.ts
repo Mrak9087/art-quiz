@@ -1,6 +1,7 @@
 import "./quest.css";
 import { Answer } from "../answer/answer";
 import { BaseComponent } from "../baseComponent/baseComponent";
+import {IAnswer} from '../interfaces/interfaces';
 
 export class Quest extends BaseComponent{
     private answers: Answer[] = [];
@@ -14,7 +15,7 @@ export class Quest extends BaseComponent{
         // this.question = 'quest1';
     }
 
-    init(questImages:HTMLDivElement, arrAnswerObj:{right:boolean, answer:{author: string,name: string,year: string,imageNum: string}}[]):void{
+    init(questImages:HTMLDivElement, arrAnswerObj:IAnswer[]):void{
         this.divTxt = document.createElement('div');
         this.divTxt.className = 'question'
         this.divTxt.innerHTML = this.question;

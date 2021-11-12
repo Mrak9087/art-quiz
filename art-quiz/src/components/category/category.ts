@@ -1,6 +1,7 @@
 import {Quest} from '../quest/quest';
 import {images} from "../images";
 import { Answer } from '../answer/answer';
+import {IAnswer} from '../interfaces/interfaces';
 
 export class Category{
     readonly MAX_COUNT_QUEST:number = 10;
@@ -22,7 +23,7 @@ export class Category{
     toFormQuestion():void{
         let tmpArr = images.slice(this.startIndex,this.endIndex);
         tmpArr.forEach((item) => {
-            let answers:{right:boolean, answer:{author: string,name: string,year: string,imageNum: string}}[] = [];
+            let answers:IAnswer[] = [];
             let questImages = document.createElement('div');
             questImages.className = 'quest_img';
             questImages.style.cssText = `background-image:url(./assets/pictures/img/${item.imageNum}.jpg)`;
@@ -37,7 +38,7 @@ export class Category{
     }
 
 
-    addIncorrectAnswers(answers:{right:boolean, answer:{author: string,name: string,year: string,imageNum: string}}[]):void{
+    addIncorrectAnswers(answers:IAnswer[]):void{
         let incorrectIndex = this.getRandomNum(0,9);
         for (let i = 0; i < 3; i++){
             while (answers.find((item)=> item.answer === images[incorrectIndex]) ){
