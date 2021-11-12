@@ -44,4 +44,8 @@ export class Quest extends BaseComponent{
     getAnswers():Array<Answer>{
         return this.answers;
     }
+
+    setQuestion(question:string):void{
+        this.question = question;
+    }
 }
