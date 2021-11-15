@@ -1,23 +1,43 @@
+import './category.css';
+
 import {Quest} from '../quest/quest';
 import {images} from "../images";
 import { Answer } from '../answer/answer';
 import {IAnswer} from '../interfaces/interfaces';
+import { BaseComponent } from '../baseComponent/baseComponent';
 
-export class Category{
-    readonly MAX_COUNT_QUEST:number = 10;
+export class Category extends BaseComponent{
+    static readonly MAX_COUNT_QUEST:number = 10;
     private quests: Quest[];
     private correctCount: number;
     private startIndex:number;
     private endIndex:number;
+    private infoDiv: HTMLDivElement;
+    private imgPreView: HTMLDivElement;
+    private currentQuest:number;
+    private container:HTMLDivElement;
+
+    
+    
     constructor(private readonly index:number){
-        this.startIndex = this.index * this.MAX_COUNT_QUEST;
-        this.endIndex = this.startIndex + this.MAX_COUNT_QUEST - 1;
+        super('category');
+        this.startIndex = this.index * Category.MAX_COUNT_QUEST;
+        this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST ;
         this.quests = [];
         this.correctCount = 0;
+        this.currentQuest = 0;
+
     }
 
-    init():void{
+    init(container:HTMLDivElement):void{
+        this.container = container;
+        this.infoDiv = document.createElement('div');
+        this.infoDiv.innerHTML = (this.index+1).toString();
+        this.imgPreView = document.createElement('div');
+        this.imgPreView.className = 'preview';
+        this.imgPreView.style.cssText = `background-image:url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
         this.toFormQuestion();
+        this.node.append(this.infoDiv, this.imgPreView);
     }
 
     toFormQuestion():void{
@@ -32,11 +52,13 @@ export class Category{
             answers = this.shuffle(answers);
             const quest = new Quest();
             quest.init(questImages,answers);
+            quest.btnNext.addEventListener('click', ()=>{
+                this.nextQuest()
+            })
             this.quests.push(quest);
         })
-        this.addEvenToAnswer();
+        this.addEventToAnswer();
     }
-
 
     addIncorrectAnswers(answers:IAnswer[]):void{
         let incorrectIndex = this.getRandomNum(0,9);
@@ -49,7 +71,7 @@ export class Category{
         
     }
 
-    addEvenToAnswer():void{
+    addEventToAnswer():void{
         this.quests.forEach((quest)=>{
             quest.getAnswers().forEach((answer)=>{
                 answer.node.addEventListener('click',()=>{
@@ -87,4 +109,18 @@ export class Category{
     getQuests():Array<Quest>{
         return this.quests
     }
+
+    showQuest():void{
+        this.container.innerHTML = '';
+        this.container.append(this.quests[this.currentQuest].node);
+    }
+
+    nextQuest(){
+        this.currentQuest++;
+        if (this.currentQuest === this.quests.length) {
+            return;
+        }
+        this.showQuest();
+    }
+
 }
