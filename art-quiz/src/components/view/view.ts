@@ -29,11 +29,7 @@ export class View extends BaseComponent{
         })
     }
 
-    async categoryHandler(category:Category){
-        await this.doContainer(true);
-        category.showQuest();
-        await this.doContainer(false);
-    }
+    
 
     addEventToCategory():void{
         this.categories.forEach((item)=>{
@@ -41,6 +37,12 @@ export class View extends BaseComponent{
                 this.categoryHandler(item);
             })
         })
+    }
+
+    async categoryHandler(category:Category){
+        await this.doContainer(true);
+        category.showQuest();
+        await this.doContainer(false);
     }
 
     doContainer(hid:boolean): Promise<void>{

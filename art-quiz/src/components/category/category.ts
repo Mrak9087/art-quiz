@@ -118,6 +118,7 @@ export class Category extends BaseComponent{
     nextQuest(){
         this.currentQuest++;
         if (this.currentQuest === this.quests.length) {
+            this.currentQuest = this.quests.length-1;
             return;
         }
         this.showQuest();
