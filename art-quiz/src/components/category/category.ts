@@ -5,6 +5,7 @@ import {images} from "../images";
 import { Answer } from '../answer/answer';
 import {IAnswer} from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
+import { View } from '../view/view';
 
 export class Category extends BaseComponent{
     static readonly MAX_COUNT_QUEST:number = 10;
@@ -16,6 +17,7 @@ export class Category extends BaseComponent{
     private imgPreView: HTMLDivElement;
     private currentQuest:number;
     private container:HTMLDivElement;
+    private view: View;
 
     
     
@@ -29,8 +31,9 @@ export class Category extends BaseComponent{
 
     }
 
-    init(container:HTMLDivElement):void{
+    init(container:HTMLDivElement, view:View):void{
         this.container = container;
+        this.view = view;
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = (this.index+1).toString();
         this.imgPreView = document.createElement('div');
@@ -63,7 +66,7 @@ export class Category extends BaseComponent{
     addIncorrectAnswers(answers:IAnswer[]):void{
         let incorrectIndex = this.getRandomNum(0,9);
         for (let i = 0; i < 3; i++){
-            while (answers.find((item)=> item.answer === images[incorrectIndex]) ){
+            while (answers.find((item)=> item.answer.author === images[incorrectIndex].author) ){
                 incorrectIndex = this.getRandomNum(0,images.length-1);
             }
             answers.push({right:false,answer:images[incorrectIndex]});
@@ -115,13 +118,23 @@ export class Category extends BaseComponent{
         this.container.append(this.quests[this.currentQuest].node);
     }
 
-    nextQuest(){
+    async nextQuest(){
         this.currentQuest++;
         if (this.currentQuest === this.quests.length) {
-            this.currentQuest = this.quests.length-1;
+            this.currentQuest = 0;
+            this.container.innerHTML = '';
+            this.view.showCategories();
+            this.clearQuests();
             return;
         }
-        this.showQuest();
+        // this.showQuest();
+        await this.view.categoryHandler(this);
+    }
+
+    clearQuests(){
+        this.quests.splice(0,this.quests.length);
+        this.correctCount = 0;
+        this.toFormQuestion();
     }
 
 }

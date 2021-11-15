@@ -15,7 +15,7 @@ export class View extends BaseComponent{
         this.categories = [];
         for(let i = 0; i < this.countCategory; i++){
             const category = new Category(i);
-            category.init(this.container);
+            category.init(this.container, this);
             this.categories.push(category);
         }
         //

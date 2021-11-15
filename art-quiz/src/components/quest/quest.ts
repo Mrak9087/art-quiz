@@ -81,4 +81,8 @@ export class Quest extends BaseComponent{
         this.node.append(this.overlay);
     }
 
+    clearAnswered(){
+        this.isAnswered = false;
+    }
+
 }
