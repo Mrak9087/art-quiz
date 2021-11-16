@@ -1,9 +1,11 @@
 export interface IAnswer{
     right:boolean, 
-    answer:{
-        author: string,
-        name: string,
-        year: string,
-        imageNum: string
-    }
+    answer:IAnswerContent
+}
+
+export interface IAnswerContent{
+    author: string,
+    name: string,
+    year: string,
+    imageNum: string
 }

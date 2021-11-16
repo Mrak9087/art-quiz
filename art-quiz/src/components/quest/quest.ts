@@ -2,6 +2,7 @@ import "./quest.css";
 import { Answer } from "../answer/answer";
 import { BaseComponent } from "../baseComponent/baseComponent";
 import {IAnswer} from '../interfaces/interfaces';
+import {AnswerType} from "../enums/enums";
 
 export class Quest extends BaseComponent{
     private answers: Answer[] = [];
@@ -35,7 +36,7 @@ export class Quest extends BaseComponent{
         this.questAnswer = document.createElement('div');
         this.questAnswer.className = 'answer_container';
         arrAnswerObj.forEach((item) => {
-            const answerObj = new Answer(item.answer.author,item.right);
+            const answerObj = new Answer(item.answer,item.right,AnswerType.img);
             this.answers.push(answerObj);
             this.questAnswer.append(answerObj.node);
             if (item.right) this.rightAnswer = item;
