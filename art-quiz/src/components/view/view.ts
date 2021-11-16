@@ -11,7 +11,7 @@ export class View extends BaseComponent{
         super('view');
         this.container = document.createElement('div');
         this.container.className = 'container';
-        this.countCategory = images.length / Category.MAX_COUNT_QUEST;
+        this.countCategory = Math.floor(images.length / Category.MAX_COUNT_QUEST);
         this.categories = [];
         for(let i = 0; i < this.countCategory; i++){
             const category = new Category(i);
