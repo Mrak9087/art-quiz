@@ -1,3 +1,4 @@
+import "./style.css";
 import {images} from "./components/images";
 import { Quest } from "./components/quest/quest";
 import { Category } from "./components/category/category";
@@ -55,7 +56,9 @@ import { View } from "./components/view/view";
 // document.body.append(category1.getQuests()[0].node,category1.getQuests()[1].node);
 
 const view = new View();
+view.init();
 document.body.append(view.node);
-view.showCategories();
+
+
 
 
