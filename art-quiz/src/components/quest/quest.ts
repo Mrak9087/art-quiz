@@ -12,41 +12,51 @@ export class Quest extends BaseComponent{
     private questAnswer: HTMLElement;
     private isAnswered:boolean = false;
     private rightAnswer:IAnswer;
+    private type: AnswerType;
 
     public overlay:HTMLDivElement;
     public btnNext:HTMLElement;
-    constructor(){
+    constructor(type: AnswerType = AnswerType.text){
         super('quest');
         // this.question = 'quest1';
+        this.type = type
+        
     }
 
     init(questImages:HTMLDivElement, arrAnswerObj:IAnswer[]):void{
+        
         this.overlay = document.createElement('div');
         this.overlay.className = 'answer_overlay';
         this.divTxt = document.createElement('div');
         this.divTxt.className = 'question'
-        this.divTxt.innerHTML = this.question;
+        
         this.btnNext = document.createElement('div');
         this.btnNext.className = 'btn_next';
         this.btnNext.innerText = 'Next';
         this.questImages = document.createElement('div');
         this.questImages.className = 'quest_images';
         // questImages.className = 'quest_img'
-        this.questImages.append(questImages);
+        if (questImages) {
+            this.questImages.append(questImages);
+        }
         this.questAnswer = document.createElement('div');
         this.questAnswer.className = 'answer_container';
         arrAnswerObj.forEach((item) => {
-            const answerObj = new Answer(item.answer,item.right,AnswerType.img);
+            const answerObj = new Answer(item.answer,item.right,this.type);
             this.answers.push(answerObj);
             this.questAnswer.append(answerObj.node);
             if (item.right) this.rightAnswer = item;
         })
+        if(this.type === AnswerType.img){
+            this.question = `Какую картину написал ${this.rightAnswer.answer.author}?`;
+        }        
+        this.divTxt.innerHTML = this.question;
         this.node.append(this.divTxt,this.questImages,this.questAnswer);
     }
 
-    answered():void{
+    answered(isRight:boolean):void{
         this.isAnswered = true;
-        this.showRightAnswer();
+        this.showRightAnswer(isRight);
     }
 
     getAnswered():boolean{
@@ -61,10 +71,16 @@ export class Quest extends BaseComponent{
         this.question = question;
     }
 
-    showRightAnswer(){
+    showRightAnswer(isRight:boolean){
         let ovrContainer = document.createElement('div');
         ovrContainer.className = 'ovr_container';
-        
+        let okErr = document.createElement('div');
+        okErr.className = 'ok_error';
+        if (isRight){
+            okErr.classList.add('ok');
+        } else {
+            okErr.classList.add('error');
+        }
         let miniImg = document.createElement('div');
         miniImg.className = 'mini_img';
         miniImg.style.cssText = `background-image:url(./assets/pictures/img/${this.rightAnswer.answer.imageNum}.jpg)`;
@@ -75,7 +91,7 @@ export class Quest extends BaseComponent{
             <span>${this.rightAnswer.answer.name}</span>
             <span>${this.rightAnswer.answer.year}</span>
             `;
-        ovrContainer.append(miniImg, picInfo,this.btnNext);
+        ovrContainer.append(okErr, miniImg, picInfo,this.btnNext);
 
         // this.overlay;
         this.overlay.append(ovrContainer);

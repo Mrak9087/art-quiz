@@ -1,7 +1,8 @@
 import './view.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import {images} from "../images";
-import {Category} from "../category/category"
+import {Category} from "../category/category";
+import {AnswerType} from "../enums/enums";
 
 export class View extends BaseComponent{
     readonly countCategory: number;
@@ -15,7 +16,7 @@ export class View extends BaseComponent{
         this.categories = [];
         for(let i = 0; i < this.countCategory; i++){
             const category = new Category(i);
-            category.init(this.container, this);
+            category.init(this.container, this, AnswerType.img); //, AnswerType.img
             this.categories.push(category);
         }
         //

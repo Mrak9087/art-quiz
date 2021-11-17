@@ -6,6 +6,9 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
+    border: 5px solid black;
+    border-radius: 40px;
+    background-color: gray;
     transition: all 0.5s ease;
 }
 
@@ -13,8 +16,17 @@
     transform: scale(1.09);
 }
 
+.correct{
+    background-color: green;
+}
+
+.incorrect{
+    background-color: red;
+}
+
 .type_img{
     padding-top: 34%;
+    
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

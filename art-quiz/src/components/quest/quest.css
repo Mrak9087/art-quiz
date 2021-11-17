@@ -6,6 +6,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    row-gap: 15px;
 }
 
 .question{
@@ -44,14 +45,6 @@
     gap: 20px;
 }
 
-.correct{
-    background-color: green;
-}
-
-.incorrect{
-    background-color: red;
-}
-
 .answer_overlay{
     position: absolute;
     display: flex;
@@ -68,6 +61,8 @@
 .ovr_container{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 520px;
     width: 100%;
     background-color: white;
@@ -91,10 +86,14 @@
     justify-content: center;
     align-items: center;
     row-gap: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
 }
 
 .btn_next{
     max-width: 500px;
+    width:100%;
     padding: 15px 0 15px;
     border-radius: 10px;
     background-color: red;
@@ -103,4 +102,20 @@
     font-weight: bold;
     text-align: center;
     cursor: pointer;
+}
+
+.ok_error{
+    width: 40px;
+    height:40px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.ok{
+    background-image: url('../../assets/svg/ok.svg');
+}
+
+.error{
+    background-image: url('../../assets/svg/error.svg');
 }

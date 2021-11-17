@@ -6,6 +6,7 @@ import { Answer } from '../answer/answer';
 import {IAnswer} from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { View } from '../view/view';
+import {AnswerType} from "../enums/enums"
 
 export class Category extends BaseComponent{
     static readonly MAX_COUNT_QUEST:number = 10;
@@ -18,6 +19,7 @@ export class Category extends BaseComponent{
     private currentQuest:number;
     private container:HTMLDivElement;
     private view: View;
+    private answerType: AnswerType;
 
     
     
@@ -31,9 +33,10 @@ export class Category extends BaseComponent{
 
     }
 
-    init(container:HTMLDivElement, view:View):void{
+    init(container:HTMLDivElement, view:View, answerType: AnswerType = AnswerType.text):void{
         this.container = container;
         this.view = view;
+        this.answerType = answerType;
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = (this.index+1).toString();
         this.imgPreView = document.createElement('div');
@@ -47,14 +50,20 @@ export class Category extends BaseComponent{
         let tmpArr = images.slice(this.startIndex,this.endIndex);
         tmpArr.forEach((item) => {
             let answers:IAnswer[] = [];
-            let questImages = document.createElement('div');
-            questImages.className = 'quest_img';
-            questImages.style.cssText = `background-image:url(./assets/pictures/img/${item.imageNum}.jpg)`;
+            
             answers.push({right:true, answer:item})
             this.addIncorrectAnswers(answers);
             answers = this.shuffle(answers);
-            const quest = new Quest();
-            quest.init(questImages,answers);
+            const quest = new Quest(this.answerType);
+            if (this.answerType ===  AnswerType.text){
+                let questImages = document.createElement('div');
+                questImages.className = 'quest_img';
+                questImages.style.cssText = `background-image:url(./assets/pictures/img/${item.imageNum}.jpg)`;
+                quest.init(questImages,answers);
+            } else {
+                quest.init(null,answers);
+            }
+            
             quest.btnNext.addEventListener('click', ()=>{
                 this.nextQuest()
             })
@@ -102,10 +111,11 @@ export class Category extends BaseComponent{
             if (answer.getRight()){
                 this.correctCount++;
                 answer.node.classList.add('correct');
+                quest.answered(true);
             } else {
                 answer.node.classList.add('incorrect');
+                quest.answered(false);
             }
-            quest.answered();
         }        
     }
 
