@@ -133,7 +133,7 @@ export class Category extends BaseComponent{
         if (this.currentQuest === this.quests.length) {
             this.currentQuest = 0;
             this.container.innerHTML = '';
-            this.view.showCategories();
+            await this.view.showMenu();
             this.clearQuests();
             return;
         }

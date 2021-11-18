@@ -4,12 +4,14 @@ import {images} from "../images";
 import {Category} from "../category/category";
 import {AnswerType} from "../enums/enums";
 import {Menu} from "../menu/menu";
+import { Settings } from '../settings/settings';
 import { Answer } from '../answer/answer';
 
 export class View extends BaseComponent{
     readonly countCategory: number;
     private categories: Category[]; 
     private menu: Menu;
+    private settings: Settings;
     private type:AnswerType = AnswerType.img;
     public container:HTMLDivElement;
 
@@ -25,8 +27,10 @@ export class View extends BaseComponent{
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
+        this.settings = new Settings();
+        this.settings.init();
         this.addEventToMenu()
-        this.container.append(this.menu.node);
+        this.container.append(this.settings.node);
         this.node.append(this.container);
     }
 
@@ -73,13 +77,20 @@ export class View extends BaseComponent{
         await this.doContainer(false);
     }
 
+    async showMenu(){
+        await this.doContainer(true);
+        this.container.innerHTML = '';
+        this.container.append(this.menu.node)
+        await this.doContainer(false);
+    }
+
     async categoryHandler(category:Category){
         await this.doContainer(true);
         category.showQuest();
         await this.doContainer(false);
     }
 
-    doContainer(hid:boolean): Promise<void>{
+    doContainer (hid:boolean): Promise<void>{
         return new Promise((resolve)=>{
             if (hid) {
                 this.container.classList.add('hidden');

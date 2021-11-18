@@ -91,7 +91,7 @@
     font-weight: bold;
 }
 
-.btn_next{
+.ovr_container .btn_next{
     max-width: 400px;
     width:100%;
     padding: 15px 0 15px;
@@ -103,7 +103,7 @@
     font-weight: bold;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s linear;
+    transition: transform 0.3s ease;
 }
 
 .btn_next:hover{
