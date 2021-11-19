@@ -1,8 +1,61 @@
 .settings{
     display: flex;
     width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 100px;
+}
+
+.btn_general{
+    padding: 20px 0 20px;
+    font-family: Arial;
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    outline: none;
+    border: none;
+    
+    cursor: pointer;
+    transition: all 0.5s ease;
+    color: white;
+}
+
+.btn_save{
+    width: 250px;
+    background-color: #c2b6b6;
+    background-image: linear-gradient(315deg, #c2b6b6 0%, #576574 74%);
+    border-radius: 30px;
+}
+
+.btn_save:hover{
+    transform: scale(1.1);
+}
+
+.btn_save:active{
+    transform: scale(1);
+}
+
+.setting_btn{
+    max-width: 500px;
+    width: 100%;
+    min-width: 300px;
+    background-color: #3f0d12;
+    background-image: linear-gradient(315deg, #3f0d12 0%, #a71d31 74%);
+
+}
+
+.item_wrapper{
+    display: flex;
+    width: 100%;
     justify-content: center;
     column-gap: 50px;
+}
+
+.btn_wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 .item_setting{
@@ -75,4 +128,34 @@
     cursor: pointer;
     background: rgb(95, 89, 89);
    
+}
+
+.time_wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.time_wrapper span{
+    color: dimgray;
+    font-family: Arial;
+    font-size: 36px;
+    font-style: normal;
+}
+
+.active_sound{
+    width: 32px;
+    height: 32px;
+    border: 2px solid dimgray;
+    cursor: pointer;
+}
+
+.active_item{
+    width: 100%;
+    height: 100%;
+    background-image: url("../../assets/svg/active.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

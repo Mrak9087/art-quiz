@@ -30,7 +30,7 @@ export class View extends BaseComponent{
         this.settings = new Settings();
         this.settings.init();
         this.addEventToMenu()
-        this.container.append(this.settings.node);
+        this.container.append(this.menu.node);
         this.node.append(this.container);
     }
 
