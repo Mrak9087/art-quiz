@@ -59,14 +59,22 @@ export class View extends BaseComponent{
     }
 
     addEventToMenu():void{
-        this.menu.artistQuiz.addEventListener('click', ()=>{
+        this.menu.artistQuiz.addEventListener('click', async ()=>{
             this.type = AnswerType.text;
-            this.showCategories()
+            await this.showCategories()
         })
 
-        this.menu.picturesQuiz.addEventListener('click', ()=>{
+        this.menu.picturesQuiz.addEventListener('click', async ()=>{
             this.type = AnswerType.img;
-            this.showCategories()
+            await this.showCategories()
+        })
+
+        this.menu.settings.settingBtn.addEventListener('click', async ()=>{
+            await this.showSetting();
+        })
+
+        this.menu.settings.btnSave.addEventListener('click', async ()=>{
+            await this.showMenu();
         })
     }
 
@@ -81,6 +89,13 @@ export class View extends BaseComponent{
         await this.doContainer(true);
         this.container.innerHTML = '';
         this.container.append(this.menu.node)
+        await this.doContainer(false);
+    }
+
+    async showSetting(){
+        await this.doContainer(true);
+        this.container.innerHTML = '';
+        this.container.append(this.menu.settings.node);
         await this.doContainer(false);
     }
 

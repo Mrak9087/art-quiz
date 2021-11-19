@@ -1,11 +1,13 @@
 import "./menu.css";
 import {BaseComponent} from "../baseComponent/baseComponent";
+import { Settings } from "../settings/settings";
 
 export class Menu extends BaseComponent{
     private menuWrapper:HTMLDivElement;
 
     public artistQuiz:HTMLDivElement;
     public picturesQuiz:HTMLDivElement;
+    public settings: Settings;
 
     constructor(){
         super('menu_container')
@@ -34,7 +36,14 @@ export class Menu extends BaseComponent{
         this.picturesQuiz = document.createElement('div');
         this.picturesQuiz.className = 'menu_item ';
         this.picturesQuiz.append(picImg, picText);
-
         quizContainer.append(this.artistQuiz, this.picturesQuiz);
+
+        let settingContainer:HTMLDivElement = document.createElement('div');
+        settingContainer.className = 'setting_container';
+        this.settings = new Settings();
+        this.settings.init();
+        settingContainer.append(this.settings.settingBtn);
+        
+        this.menuWrapper.append(settingContainer);
     }
 }

@@ -39,6 +39,7 @@ export class Settings extends BaseComponent{
 
         this.settingBtn = document.createElement('div');
         this.settingBtn.className = 'btn_general setting_btn'; 
+        this.settingBtn.innerHTML = 'Setting';
     }
 
     initItemSound():void{
