@@ -7,7 +7,7 @@ import {AnswerType} from "../enums/enums";
 export class Quest extends BaseComponent{
     private answers: Answer[] = [];
     private question: string = 'Кто автор картины?';//Question;
-    private divTxt: HTMLElement;
+    // private divTxt: HTMLElement;
     private questImages: HTMLElement;
     private questAnswer: HTMLElement;
     private isAnswered:boolean = false;
@@ -27,8 +27,8 @@ export class Quest extends BaseComponent{
         
         this.overlay = document.createElement('div');
         this.overlay.className = 'answer_overlay';
-        this.divTxt = document.createElement('div');
-        this.divTxt.className = 'question'
+        // this.divTxt = document.createElement('div');
+        // this.divTxt.className = 'question'
         
         this.btnNext = document.createElement('div');
         this.btnNext.className = 'btn_next';
@@ -50,8 +50,8 @@ export class Quest extends BaseComponent{
         if(this.type === AnswerType.img){
             this.question = `Какую картину написал ${this.rightAnswer.answer.author}?`;
         }        
-        this.divTxt.innerHTML = this.question;
-        this.node.append(this.divTxt,this.questImages,this.questAnswer);
+        // this.divTxt.innerHTML = this.question;
+        this.node.append(this.questImages,this.questAnswer);//this.divTxt,
     }
 
     answered(isRight:boolean):void{
@@ -69,6 +69,10 @@ export class Quest extends BaseComponent{
 
     setQuestion(question:string):void{
         this.question = question;
+    }
+
+    getQuestion():string{
+        return this.question;
     }
 
     showRightAnswer(isRight:boolean){

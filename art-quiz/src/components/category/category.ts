@@ -4,9 +4,12 @@ import {Quest} from '../quest/quest';
 import {images} from "../images";
 import { Answer } from '../answer/answer';
 import {IAnswer} from '../interfaces/interfaces';
+import {ISetting} from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { View } from '../view/view';
 import {AnswerType} from "../enums/enums"
+import ok from '../../assets/sounds/correctanswer.mp3';
+import wrong from '../../assets/sounds/wronganswer.mp3';
 
 export class Category extends BaseComponent{
     static readonly MAX_COUNT_QUEST:number = 10;
@@ -20,6 +23,15 @@ export class Category extends BaseComponent{
     private container:HTMLDivElement;
     private view: View;
     private answerType: AnswerType;
+    private setting:ISetting;
+    private okAnswer:HTMLAudioElement;
+    private wrongAnswer:HTMLAudioElement;
+    private second:number = 30;
+    private questTxt:HTMLDivElement;
+    private questTime:HTMLDivElement;
+    private headCategory:HTMLDivElement;
+    private wrapper:HTMLDivElement;
+    private idTimer:NodeJS.Timeout;//NodeJS.Timeout
 
     
     
@@ -33,9 +45,14 @@ export class Category extends BaseComponent{
 
     }
 
-    init(container:HTMLDivElement, view:View, answerType: AnswerType = AnswerType.text):void{
+    init(container:HTMLDivElement, view:View, setting:ISetting,answerType: AnswerType = AnswerType.text):void{
         this.container = container;
         this.view = view;
+        this.setting = setting;
+        this.okAnswer = new Audio(ok);
+        this.okAnswer.volume = setting.soundLevel;
+        this.wrongAnswer = new Audio(wrong);
+        this.wrongAnswer.volume = setting.soundLevel;
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
         this.infoDiv.innerHTML = (this.index+1).toString();
@@ -43,6 +60,16 @@ export class Category extends BaseComponent{
         this.imgPreView.className = 'preview';
         this.imgPreView.style.cssText = `background-image:url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
         this.toFormQuestion();
+        this.headCategory = document.createElement('div');
+        this.headCategory.className = 'head_category';
+        this.questTxt = document.createElement('div');
+        this.questTxt.className = 'quest_txt';
+        this.questTime = document.createElement('div');
+        this.questTime.className = 'quest_time';
+        this.headCategory.append(this.questTxt, this.questTime);
+        this.wrapper = document.createElement('div');
+        this.wrapper.className = 'category_wrapper';
+        this.wrapper.append(this.headCategory);
         this.node.append(this.infoDiv, this.imgPreView);
     }
 
@@ -109,14 +136,23 @@ export class Category extends BaseComponent{
     answerHandler(quest:Quest,answer:Answer){
         if (!quest.getAnswered()){
             if (answer.getRight()){
+                if (this.setting.soundActive){
+                    this.okAnswer.play();
+                }
+                
                 this.correctCount++;
                 answer.node.classList.add('correct');
                 quest.answered(true);
             } else {
+                if (this.setting.soundActive){
+                    this.wrongAnswer.play();
+                }
+
                 answer.node.classList.add('incorrect');
                 quest.answered(false);
             }
-        }        
+        }    
+        clearTimeout(this.idTimer);    
     }
 
     getQuests():Array<Quest>{
@@ -125,7 +161,16 @@ export class Category extends BaseComponent{
 
     showQuest():void{
         this.container.innerHTML = '';
-        this.container.append(this.quests[this.currentQuest].node);
+        this.wrapper.innerHTML = '';
+        let quest = this.quests[this.currentQuest];
+        this.questTxt.innerHTML = quest.getQuestion(); 
+        this.wrapper.append(this.headCategory, quest.node)
+        this.container.append(this.wrapper);
+        if (this.setting.timeActive){
+            this.second = this.setting.timeValue;
+            this.idTimer = setTimeout(()=>{this.setSecond(quest)},0);
+        }
+        
     }
 
     async nextQuest(){
@@ -145,6 +190,26 @@ export class Category extends BaseComponent{
         this.quests.splice(0,this.quests.length);
         this.correctCount = 0;
         this.toFormQuestion();
+    }
+
+    setSecond(quest:Quest){
+        this.second--;
+        this.questTime.innerHTML = this.addZero(this.second);
+        if (!this.second){
+            if (this.setting.soundActive){
+                this.wrongAnswer.play();
+            }
+            quest.answered(false);
+            clearTimeout(this.idTimer);
+            
+        } else {
+            this.idTimer = setTimeout(()=>{this.setSecond(quest)},1000);
+        }
+        
+    }
+
+    addZero(n:number):string{
+        return (n < 10 ? '0' : '') + n; 
     }
 
 }

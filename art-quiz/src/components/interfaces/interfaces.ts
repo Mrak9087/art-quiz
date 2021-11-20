@@ -9,3 +9,10 @@ export interface IAnswerContent{
     year: string,
     imageNum: string
 }
+
+export interface ISetting{
+    soundActive: boolean,
+    soundLevel: number,
+    timeActive: boolean,
+    timeValue:number,
+}

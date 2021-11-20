@@ -1,5 +1,6 @@
 import './settings.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
+import {ISetting} from '../interfaces/interfaces';
 
 
 
@@ -8,6 +9,7 @@ export class Settings extends BaseComponent{
     private activeSound: boolean = false;
     private activeTime: boolean = false;
     private rangeTxt: HTMLDivElement;
+    private setting:ISetting;
     public itemSound: HTMLDivElement;
     public itemTime: HTMLDivElement;
     public settingBtn: HTMLDivElement;
@@ -61,7 +63,7 @@ export class Settings extends BaseComponent{
         this.rangeSound.min = '0';
         this.rangeSound.max = '1';
         this.rangeSound.step = '0.02';
-        this.rangeSound.value = '0.5';
+        this.rangeSound.value = '0.4';
         soundWrapper.append(this.soundOff, this.rangeSound);
 
         this.itemActiveSound = document.createElement('div');
@@ -73,6 +75,7 @@ export class Settings extends BaseComponent{
         soundTxt.innerHTML = '<span>sound</span>';
         this.itemSound.append(soundLabel,soundWrapper, this.itemActiveSound, soundTxt);
         this.rangeSound.addEventListener('input', this.changeSoundRange);
+        this.changeSoundRange();
         
     }
 
@@ -103,6 +106,7 @@ export class Settings extends BaseComponent{
         timeTxt.className = 'item_txt';
         timeTxt.innerHTML = '<span>time</span>';
         this.itemTime.append(timeLabel,timeWrapper,this.itemActiveTime,timeTxt);
+        this.changeTimeRange();
         
         
     }
@@ -116,9 +120,36 @@ export class Settings extends BaseComponent{
         // let value = Math.floor(parseFloat(this.rangeTime.value) / 10) * 20;
         // if (value % 10) value += 20
         // console.log(this.rangeTime.value, value);
-        let value = 15;
+        let value:number = 0;
+        switch (parseInt(this.rangeTime.value)){
+            case 5:{
+                value = 0;
+                break;
+            }
+            case 10:{
+                value = 20;
+                break;
+            }
+            case 15:{
+                value = 40;
+                break;
+            }
+            case 20:{
+                value = 60;
+                break;
+            }
+            case 25:{
+                value = 80;
+                break;
+            }
+            case 30:{
+                value = 100;
+                break;
+            }
+        }
+
         this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
-        // this.rangeTime.style.background = `linear-gradient(to right, dimgray 0%, dimgray ${}%, #fff ${TMP[+this.rangeTime.value]}%, white 100%)`;
+        this.rangeTime.style.background = `linear-gradient(to right, dimgray 0%, dimgray ${value}%, #fff ${value}%, white 100%)`;
     }
 
     changeActiveSound = () => {
@@ -137,6 +168,20 @@ export class Settings extends BaseComponent{
 
     getActiveTime():boolean{
         return this.activeTime;
+    }
+
+    saveSettings(){
+        let objSetting = {
+            soundActive: this.activeSound,
+            soundLevel: parseFloat(this.rangeSound.value),
+            timeActive: this.activeTime,
+            timeValue: parseInt(this.rangeTime.value),
+        }
+        this.setting = objSetting;
+    }
+
+    getSetting():ISetting{
+        return this.setting;
     }
 
     private setItemActive(isActive:boolean, item:HTMLDivElement){

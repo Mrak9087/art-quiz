@@ -6,6 +6,7 @@ import {AnswerType} from "../enums/enums";
 import {Menu} from "../menu/menu";
 import { Settings } from '../settings/settings';
 import { Answer } from '../answer/answer';
+import {ISetting} from '../interfaces/interfaces';
 
 export class View extends BaseComponent{
     readonly countCategory: number;
@@ -13,6 +14,7 @@ export class View extends BaseComponent{
     private menu: Menu;
     private settings: Settings;
     private type:AnswerType = AnswerType.img;
+    private setting: ISetting;
     public container:HTMLDivElement;
 
     constructor(){
@@ -21,14 +23,20 @@ export class View extends BaseComponent{
     }
 
     init():void{
+        this.setting = {
+            soundActive: false,
+            soundLevel: 0,
+            timeActive: false,
+            timeValue:0,
+        }
         this.container = document.createElement('div');
         this.container.className = 'container';
         
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
-        this.settings = new Settings();
-        this.settings.init();
+        // this.settings = new Settings();
+        // this.settings.init();
         this.addEventToMenu()
         this.container.append(this.menu.node);
         this.node.append(this.container);
@@ -39,7 +47,7 @@ export class View extends BaseComponent{
             this.categories.splice(0, this.categories.length); 
             for(let i = 0; i < this.countCategory; i++){
                 const category = new Category(i);
-                category.init(this.container, this, this.type); //, AnswerType.img
+                category.init(this.container, this, this.setting, this.type); //, AnswerType.img
                 this.categories.push(category);
             }
             this.addEventToCategory();
@@ -74,7 +82,10 @@ export class View extends BaseComponent{
         })
 
         this.menu.settings.btnSave.addEventListener('click', async ()=>{
+            this.menu.settings.saveSettings();
+            this.setting = this.menu.settings.getSetting();
             await this.showMenu();
+            console.log(this.setting);
         })
     }
 
@@ -94,6 +105,7 @@ export class View extends BaseComponent{
 
     async showSetting(){
         await this.doContainer(true);
+        
         this.container.innerHTML = '';
         this.container.append(this.menu.settings.node);
         await this.doContainer(false);
