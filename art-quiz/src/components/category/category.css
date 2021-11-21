@@ -1,4 +1,4 @@
-.category{
+.category, .score_item{
     width: 184px;
     display: flex;
     flex-direction: column;
@@ -134,4 +134,12 @@
 
 .btn_win:hover{
     box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
+}
+
+.right_answer{
+    background-color: green;
+}
+
+.no_right_answer{
+    background-color: red;
 }

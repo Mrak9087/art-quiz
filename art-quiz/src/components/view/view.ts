@@ -24,7 +24,7 @@ export class View extends BaseComponent{
     }
 
     init():void{
-        this.setting = {
+        this.setting = JSON.parse(localStorage.getItem('arqSetting')) || {
             soundActive: false,
             soundLevel: 0,
             timeActive: false,

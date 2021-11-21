@@ -11,9 +11,12 @@ export class Quest extends BaseComponent{
     private questImages: HTMLElement;
     private questAnswer: HTMLElement;
     private isAnswered:boolean = false;
-    private rightAnswer:IAnswer;
+    
+    
     private type: AnswerType;
 
+    public isRightAnswered:boolean = false;
+    public rightAnswer:IAnswer;
     public overlay:HTMLDivElement;
     public btnNext:HTMLElement;
     constructor(type: AnswerType = AnswerType.text){
@@ -26,7 +29,7 @@ export class Quest extends BaseComponent{
     init(questImages:HTMLDivElement, arrAnswerObj:IAnswer[]):void{
         
         this.overlay = document.createElement('div');
-        this.overlay.className = 'answer_overlay';
+        this.overlay.className = 'answer_overlay ovr_hidden';
         // this.divTxt = document.createElement('div');
         // this.divTxt.className = 'question'
         
@@ -54,6 +57,10 @@ export class Quest extends BaseComponent{
         this.node.append(this.questImages,this.questAnswer);//this.divTxt,
     }
 
+    getRightAnswer():IAnswer{
+        return this.rightAnswer;
+    }
+
     answered(isRight:boolean):void{
         this.isAnswered = true;
         this.showRightAnswer(isRight);
@@ -76,6 +83,7 @@ export class Quest extends BaseComponent{
     }
 
     showRightAnswer(isRight:boolean){
+        this.isRightAnswered = isRight;
         let ovrContainer = document.createElement('div');
         ovrContainer.className = 'ovr_container';
         let okErr = document.createElement('div');
@@ -100,10 +108,18 @@ export class Quest extends BaseComponent{
         // this.overlay;
         this.overlay.append(ovrContainer);
         this.node.append(this.overlay);
+        setTimeout(() => {
+            this.overlay.classList.remove('ovr_hidden');
+        }, 10);
     }
 
     clearAnswered(){
         this.isAnswered = false;
+        
+    }
+
+    getIsRightAnswered():boolean{
+        return this.isRightAnswered;
     }
 
 }

@@ -36,6 +36,9 @@ export class Category extends BaseComponent{
     private headCategory:HTMLDivElement;
     private wrapper:HTMLDivElement;
     private idTimer:NodeJS.Timeout;//NodeJS.Timeout
+    private nameCategory:string;
+    private scoreContainer: HTMLDivElement;
+    private scoreItems:HTMLDivElement[];
 
     private categorysStorage:IStorageCategory[];
     
@@ -44,6 +47,7 @@ export class Category extends BaseComponent{
         this.startIndex = this.index * Category.MAX_COUNT_QUEST;
         this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST ;
         this.quests = [];
+        this.scoreItems = [];
         this.correctCount = 0;
         this.currentQuest = 0;
 
@@ -58,6 +62,10 @@ export class Category extends BaseComponent{
 
         if (this.categorysStorage[this.index]){
             this.correctCount = this.categorysStorage[this.index].correctCount || 0;
+            if (this.categorysStorage[this.index].score.length){
+                this.setScoreItems(this.categorysStorage[this.index].score);
+            }
+            
         } else {
             this.correctCount = 0;
         }
@@ -75,7 +83,8 @@ export class Category extends BaseComponent{
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
         this.infoDiv.className = 'cat_name';
-        this.infoDiv.innerHTML = `Категория ${this.index+1}`;
+        this.nameCategory = `Категория ${this.index+1}`;
+        this.infoDiv.innerHTML = this.nameCategory;
         this.scopeView = document.createElement('div');
         this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
         this.headPreView = document.createElement('div');
@@ -301,6 +310,28 @@ export class Category extends BaseComponent{
 
     clearResult():void{
         this.correctCount = 0;
+    }
+
+    setScoreItems(arrayScore:Quest[]):void{
+        arrayScore.forEach((item)=>{
+            let headScore:HTMLDivElement = document.createElement('div');
+            headScore.className = 'head_preview';
+            headScore.innerHTML = this.nameCategory;
+            let imgScore:HTMLDivElement = document.createElement('div');
+            imgScore.className = 'preview';
+            let rgtAnsw:IAnswer = item.rightAnswer;
+            imgScore.style.backgroundImage = `url(./assets/pictures/img/${rgtAnsw.answer.imageNum}.jpg)`;
+            let scoreItem:HTMLDivElement = document.createElement('div');
+            scoreItem.className = 'score_item';
+            scoreItem.append(headScore,imgScore);
+            if (item.isRightAnswered){
+                headScore.classList.add('right_answer');
+            } else {
+                headScore.classList.add('no_right_answer');
+                imgScore.style.filter = 'grayscale(100%)';
+            }
+            this.scoreItems.push(scoreItem);
+        })        
     }
 
 }
