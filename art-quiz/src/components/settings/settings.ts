@@ -5,7 +5,8 @@ import {ISetting} from '../interfaces/interfaces';
 
 
 export class Settings extends BaseComponent{
-
+    private readonly DIS_COLOR:string = '#ccc';
+    private readonly ACT_COLOR:string = 'dimgray';
     private activeSound: boolean = false;
     private activeTime: boolean = false;
     private rangeTxt: HTMLDivElement;
@@ -26,6 +27,15 @@ export class Settings extends BaseComponent{
     }
 
     init():void{
+        const defaultSetting = {
+            soundActive: this.activeSound,
+            soundLevel: '0.0',
+            timeActive: this.activeTime,
+            timeValue: 10,
+        }
+        this.setting = JSON.parse(localStorage.getItem('arqSetting')) || defaultSetting;
+        this.activeSound = this.setting.soundActive;
+        this.activeTime = this.setting.timeActive;
         const itemWrapper:HTMLDivElement = document.createElement('div');
         itemWrapper.className = 'item_wrapper';
         this.initItemSound();
@@ -42,6 +52,9 @@ export class Settings extends BaseComponent{
         this.settingBtn = document.createElement('div');
         this.settingBtn.className = 'btn_general setting_btn'; 
         this.settingBtn.innerHTML = 'Setting';
+        
+        this.activeSound = this.setting.soundActive;
+        this.activeTime = this.setting.timeActive;
     }
 
     initItemSound():void{
@@ -59,11 +72,21 @@ export class Settings extends BaseComponent{
         this.soundOff = document.createElement('button');
         this.soundOff = document.createElement('button');
         this.soundOff.className = 'sound_off';
+
+        this.soundOff.addEventListener('click', ()=>{
+            this.doSoundOff()
+        })
+
+        
+
         this.rangeSound.type = 'range';
         this.rangeSound.min = '0';
         this.rangeSound.max = '1';
         this.rangeSound.step = '0.02';
-        this.rangeSound.value = '0.4';
+        this.rangeSound.value = this.setting.soundLevel.toString();
+
+        this.rangeSound.disabled = !this.activeSound;
+        this.changeSoundRange();
         soundWrapper.append(this.soundOff, this.rangeSound);
 
         this.itemActiveSound = document.createElement('div');
@@ -76,6 +99,7 @@ export class Settings extends BaseComponent{
         this.itemSound.append(soundLabel,soundWrapper, this.itemActiveSound, soundTxt);
         this.rangeSound.addEventListener('input', this.changeSoundRange);
         this.changeSoundRange();
+        this.setItemActive(this.activeSound,this.itemActiveSound);
         
     }
 
@@ -93,7 +117,9 @@ export class Settings extends BaseComponent{
         this.rangeTime.min = '5';
         this.rangeTime.max = '30';
         this.rangeTime.step = '5';
-        this.rangeTime.value = '10';
+        this.rangeTime.value =  this.setting.timeValue.toString();
+        this.rangeTime.disabled = !this.activeTime;
+        this.changeTimeRange();
         this.rangeTxt = document.createElement('div');
         this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
         timeWrapper.append(this.rangeTime,this.rangeTxt);
@@ -107,19 +133,27 @@ export class Settings extends BaseComponent{
         timeTxt.innerHTML = '<span>time</span>';
         this.itemTime.append(timeLabel,timeWrapper,this.itemActiveTime,timeTxt);
         this.changeTimeRange();
+        this.setItemActive(this.activeTime,this.itemActiveTime);
         
-        
+    }
+
+    doSoundOff():void{
+        this.rangeSound.value = '0';
+        this.changeSoundRange();
     }
 
     changeSoundRange = () => {
         let value = parseFloat(this.rangeSound.value) * 100;
-        this.rangeSound.style.background = `linear-gradient(to right, dimgray 0%, dimgray ${value}%, #fff ${value}%, white 100%)`;
+        if(!this.activeSound){
+            this.rangeSound.style.background = `linear-gradient(to right, ${this.DIS_COLOR} 0%, ${this.DIS_COLOR} ${value}%, #fff ${value}%, white 100%)`;
+        } else {
+            this.rangeSound.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
+        }
+        
     }
 
     changeTimeRange = () => {
-        // let value = Math.floor(parseFloat(this.rangeTime.value) / 10) * 20;
-        // if (value % 10) value += 20
-        // console.log(this.rangeTime.value, value);
+        
         let value:number = 0;
         switch (parseInt(this.rangeTime.value)){
             case 5:{
@@ -148,18 +182,27 @@ export class Settings extends BaseComponent{
             }
         }
 
-        this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
-        this.rangeTime.style.background = `linear-gradient(to right, dimgray 0%, dimgray ${value}%, #fff ${value}%, white 100%)`;
+        // this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
+        if (!this.activeTime){
+            this.rangeTime.style.background = `linear-gradient(to right, ${this.DIS_COLOR} 0%, ${this.DIS_COLOR} ${value}%, #fff ${value}%, white 100%)`;
+        } else {
+            this.rangeTime.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
+        }
+        
     }
 
     changeActiveSound = () => {
         this.activeSound = !this.activeSound;
-        this.setItemActive(this.activeSound, this.itemActiveSound)
+        this.rangeSound.disabled = !this.activeSound;
+        this.setItemActive(this.activeSound, this.itemActiveSound);
+        this.changeSoundRange()
     }
 
     changeActiveTime = () => {
         this.activeTime = !this.activeTime;
-        this.setItemActive(this.activeTime, this.itemActiveTime)
+        this.rangeTime.disabled = !this.activeTime;
+        this.setItemActive(this.activeTime, this.itemActiveTime);
+        this.changeTimeRange()
     }
 
     getActiveSound():boolean{
@@ -178,6 +221,7 @@ export class Settings extends BaseComponent{
             timeValue: parseInt(this.rangeTime.value),
         }
         this.setting = objSetting;
+        localStorage.setItem('arqSetting',JSON.stringify(this.setting));
     }
 
     getSetting():ISetting{

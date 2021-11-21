@@ -16,3 +16,4 @@ export interface ISetting{
     timeActive: boolean,
     timeValue:number,
 }
+

@@ -55,7 +55,7 @@ export class Category extends BaseComponent{
         this.wrongAnswer.volume = setting.soundLevel;
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
-        this.infoDiv.innerHTML = (this.index+1).toString();
+        this.infoDiv.innerHTML = `Категория ${this.index+1}`;
         this.imgPreView = document.createElement('div');
         this.imgPreView.className = 'preview';
         this.imgPreView.style.cssText = `background-image:url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`

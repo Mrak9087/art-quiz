@@ -112,7 +112,7 @@
     -webkit-appearance: none;
     width: 210px;
     height: 6px;
-    background: linear-gradient(90deg,dimgray 0,dimgray 40%,#e5e5e5 0,#e5e5e5);
+    background: linear-gradient(90deg,rgb(129, 129, 129) 0,dimgray 40%,#e5e5e5 0,#e5e5e5);
     border: 1px solid dimgray;
     border-radius: 5px;
     cursor: pointer;
@@ -128,6 +128,10 @@
     cursor: pointer;
     background: rgb(95, 89, 89);
    
+}
+
+.progress:disabled::-webkit-slider-thumb{
+    background: #ccc;
 }
 
 .time_wrapper{
