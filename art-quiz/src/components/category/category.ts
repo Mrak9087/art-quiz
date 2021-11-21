@@ -10,6 +10,7 @@ import { View } from '../view/view';
 import {AnswerType} from "../enums/enums"
 import ok from '../../assets/sounds/correctanswer.mp3';
 import wrong from '../../assets/sounds/wronganswer.mp3';
+import endround from '../../assets/sounds/endround.mp3';
 
 export class Category extends BaseComponent{
     static readonly MAX_COUNT_QUEST:number = 10;
@@ -28,6 +29,7 @@ export class Category extends BaseComponent{
     private setting:ISetting;
     private okAnswer:HTMLAudioElement;
     private wrongAnswer:HTMLAudioElement;
+    private endRound:HTMLAudioElement;
     private second:number = 30;
     private questTxt:HTMLDivElement;
     private questTime:HTMLDivElement;
@@ -68,6 +70,8 @@ export class Category extends BaseComponent{
         this.okAnswer.volume = setting.soundLevel;
         this.wrongAnswer = new Audio(wrong);
         this.wrongAnswer.volume = setting.soundLevel;
+        this.endRound = new Audio(endround);
+        this.endRound.volume = setting.soundLevel;
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
         this.infoDiv.className = 'cat_name';
@@ -79,8 +83,10 @@ export class Category extends BaseComponent{
         this.headPreView.append(this.infoDiv, this.scopeView);
         this.imgPreView = document.createElement('div');
         this.imgPreView.className = 'preview';
-        this.imgPreView.style.cssText = `background-image:url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
-        
+        this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
+        if (!this.categorysStorage[this.index]){
+            this.imgPreView.style.filter = 'grayscale(100%)';
+        }
         this.toFormQuestion();
         
         this.headCategory = document.createElement('div');
@@ -202,13 +208,55 @@ export class Category extends BaseComponent{
         if (this.currentQuest === this.quests.length) {
             this.saveToLocalStorage();
             this.currentQuest = 0;
-            this.container.innerHTML = '';
-            await this.view.showMenu();
+            this.showCongratulation();
             this.clearQuests();
             return;
         }
-        // this.showQuest();
         await this.view.categoryHandler(this);
+    }
+
+    showCongratulation():void{
+        
+        let ovrContainer = document.createElement('div');
+        ovrContainer.className = 'ovr_win_container';
+        let headTxt = document.createElement('div');
+        headTxt.className = 'head_txt';
+        headTxt.innerHTML = 'congratulation!'
+        let resultDiv = document.createElement('div');
+        resultDiv.className = 'result';
+        resultDiv.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`;
+        let miniImg = document.createElement('div');
+        miniImg.className = 'win_img';
+        
+        let btnWrap = document.createElement('div');
+        btnWrap.className = 'btn_wrap';
+        let btnHome = document.createElement('button');
+        btnHome.className = 'btn_win'
+        btnHome.innerHTML = 'home';
+        btnHome.addEventListener('click',()=>{
+            this.view.showMenu();
+        })
+
+        let btnCat = document.createElement('button');
+        btnCat.className = 'btn_win'
+        btnCat.innerHTML = 'category';
+        btnCat.addEventListener('click',()=>{
+            this.view.showCategories();
+        })
+
+        btnWrap.append(btnHome,btnCat);
+        ovrContainer.append(headTxt,resultDiv, miniImg, btnWrap);
+        let overlay = document.createElement('div');
+        overlay.className = 'ovr_win';
+        overlay.append(ovrContainer);
+        this.container.append(overlay);
+        setTimeout(() => {
+            overlay.classList.add('ovr_win_show');
+        }, 300);
+        if (this.setting.soundActive){
+            this.endRound.play();
+        }
+        
     }
 
     clearQuests(){
@@ -249,6 +297,10 @@ export class Category extends BaseComponent{
             localStorage.setItem('artPictureCategorys',JSON.stringify(this.categorysStorage));
         }
         
+    }
+
+    clearResult():void{
+        this.correctCount = 0;
     }
 
 }

@@ -62,6 +62,7 @@ export class View extends BaseComponent{
     addEventToCategory():void{
         this.categories.forEach((item)=>{
             item.node.addEventListener('click', ()=>{
+                item.clearResult();
                 this.categoryHandler(item);
             })
         })
