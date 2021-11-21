@@ -15,6 +15,7 @@ export class View extends BaseComponent{
     private settings: Settings;
     private type:AnswerType = AnswerType.img;
     private setting: ISetting;
+    public categoryContainer:HTMLDivElement;
     public container:HTMLDivElement;
 
     constructor(){
@@ -31,12 +32,12 @@ export class View extends BaseComponent{
         }
         this.container = document.createElement('div');
         this.container.className = 'container';
+        this.categoryContainer = document.createElement('div');
+        this.categoryContainer.className = 'category_container';
         
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
-        // this.settings = new Settings();
-        // this.settings.init();
         this.addEventToMenu()
         this.container.append(this.menu.node);
         this.node.append(this.container);
@@ -52,7 +53,7 @@ export class View extends BaseComponent{
             }
             this.addEventToCategory();
             this.categories.forEach((item) => {
-                this.container.append(item.node);
+                this.categoryContainer.append(item.node);
             })
             resolve();
         })
@@ -92,6 +93,7 @@ export class View extends BaseComponent{
     async showCategories(){
         await this.doContainer(true);
         this.container.innerHTML = '';
+        this.container.append(this.categoryContainer);
         await this.createCategories();
         await this.doContainer(false);
     }

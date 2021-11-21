@@ -17,7 +17,17 @@
     row-gap: 10px;
     column-gap: 10px;
     transition: all 1s ease;
-    
+}
+
+.category_container{
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 10px;
 }
 
 .hidden{

@@ -17,3 +17,8 @@ export interface ISetting{
     timeValue:number,
 }
 
+export interface IStorageCategory{
+    correctCount:number,
+    score:any[],
+}
+

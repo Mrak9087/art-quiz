@@ -4,7 +4,7 @@ import {Quest} from '../quest/quest';
 import {images} from "../images";
 import { Answer } from '../answer/answer';
 import {IAnswer} from '../interfaces/interfaces';
-import {ISetting} from '../interfaces/interfaces';
+import {ISetting, IStorageCategory} from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { View } from '../view/view';
 import {AnswerType} from "../enums/enums"
@@ -17,6 +17,8 @@ export class Category extends BaseComponent{
     private correctCount: number;
     private startIndex:number;
     private endIndex:number;
+    private headPreView:HTMLDivElement;
+    private scopeView:HTMLDivElement;
     private infoDiv: HTMLDivElement;
     private imgPreView: HTMLDivElement;
     private currentQuest:number;
@@ -33,7 +35,7 @@ export class Category extends BaseComponent{
     private wrapper:HTMLDivElement;
     private idTimer:NodeJS.Timeout;//NodeJS.Timeout
 
-    
+    private categorysStorage:IStorageCategory[];
     
     constructor(private readonly index:number){
         super('category');
@@ -46,6 +48,19 @@ export class Category extends BaseComponent{
     }
 
     init(container:HTMLDivElement, view:View, setting:ISetting,answerType: AnswerType = AnswerType.text):void{
+        if (answerType === AnswerType.text){
+            this.categorysStorage = JSON.parse(localStorage.getItem('artArtistCategorys')) || [];
+        } else {
+            this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
+        }
+
+        if (this.categorysStorage[this.index]){
+            this.correctCount = this.categorysStorage[this.index].correctCount || 0;
+        } else {
+            this.correctCount = 0;
+        }
+        
+        
         this.container = container;
         this.view = view;
         this.setting = setting;
@@ -55,11 +70,19 @@ export class Category extends BaseComponent{
         this.wrongAnswer.volume = setting.soundLevel;
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
+        this.infoDiv.className = 'cat_name';
         this.infoDiv.innerHTML = `Категория ${this.index+1}`;
+        this.scopeView = document.createElement('div');
+        this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
+        this.headPreView = document.createElement('div');
+        this.headPreView.className = 'head_preview';
+        this.headPreView.append(this.infoDiv, this.scopeView);
         this.imgPreView = document.createElement('div');
         this.imgPreView.className = 'preview';
         this.imgPreView.style.cssText = `background-image:url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
+        
         this.toFormQuestion();
+        
         this.headCategory = document.createElement('div');
         this.headCategory.className = 'head_category';
         this.questTxt = document.createElement('div');
@@ -70,7 +93,8 @@ export class Category extends BaseComponent{
         this.wrapper = document.createElement('div');
         this.wrapper.className = 'category_wrapper';
         this.wrapper.append(this.headCategory);
-        this.node.append(this.infoDiv, this.imgPreView);
+
+        this.node.append(this.headPreView, this.imgPreView);
     }
 
     toFormQuestion():void{
@@ -176,6 +200,7 @@ export class Category extends BaseComponent{
     async nextQuest(){
         this.currentQuest++;
         if (this.currentQuest === this.quests.length) {
+            this.saveToLocalStorage();
             this.currentQuest = 0;
             this.container.innerHTML = '';
             await this.view.showMenu();
@@ -210,6 +235,20 @@ export class Category extends BaseComponent{
 
     addZero(n:number):string{
         return (n < 10 ? '0' : '') + n; 
+    }
+
+    saveToLocalStorage():void{
+        let objTmp = {
+            correctCount:this.correctCount,
+            score:this.quests.splice(0),
+        }
+        this.categorysStorage[this.index] = objTmp;
+        if (this.answerType === AnswerType.text){
+            localStorage.setItem('artArtistCategorys',JSON.stringify(this.categorysStorage));
+        } else {
+            localStorage.setItem('artPictureCategorys',JSON.stringify(this.categorysStorage));
+        }
+        
     }
 
 }
