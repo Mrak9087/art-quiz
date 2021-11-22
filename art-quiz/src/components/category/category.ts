@@ -156,7 +156,7 @@ export class Category extends BaseComponent{
         if (this.answerType === AnswerType.text){
             tmpArr = images.slice(this.startIndex,this.endIndex);
         } else {
-            this.startIndex = this.startIndex*Category.MAX_COUNT_QUEST+120;
+            this.startIndex = this.index*Category.MAX_COUNT_QUEST+120;
             this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST;
             tmpArr = images.slice(this.startIndex,this.endIndex);
         }

@@ -24,7 +24,7 @@ export class View extends BaseComponent{
 
     constructor(){
         super('view');
-        this.countCategory = Math.floor(images.length / Category.MAX_COUNT_QUEST);
+        this.countCategory = Math.floor(images.length / Category.MAX_COUNT_QUEST)/2;
     }
 
     init():void{
@@ -61,7 +61,7 @@ export class View extends BaseComponent{
     createCategories():Promise<void>{
         return new Promise((resolve) =>{
             this.categories.splice(0, this.categories.length); 
-            for(let i = 0; i < Math.floor(this.countCategory/2); i++){
+            for(let i = 0; i < this.countCategory; i++){
                 const category = new Category(i);
                 category.init(this.container, this, this.setting, this.type); //, AnswerType.img
                 this.categories.push(category);
