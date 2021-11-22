@@ -41,6 +41,9 @@ export class Category extends BaseComponent{
     private scoreContainer: HTMLDivElement;
     private scoreItems:HTMLDivElement[];
     private scoreBtn:HTMLButtonElement;
+    private btnHome:HTMLButtonElement;
+    private btnCat:HTMLButtonElement;
+    private btnWrap:HTMLDivElement;
 
     private categorysStorage:IStorageCategory[];
     
@@ -61,6 +64,23 @@ export class Category extends BaseComponent{
         } else {
             this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
         }
+        this.btnHome = document.createElement('button');
+        this.btnHome.className = 'btn_win'
+        this.btnHome.innerHTML = 'home';
+        this.btnHome.addEventListener('click',()=>{
+            this.view.showMenu();
+        })
+
+        this.btnCat = document.createElement('button');
+        this.btnCat.className = 'btn_win'
+        this.btnCat.innerHTML = 'category';
+        this.btnCat.addEventListener('click',()=>{
+            this.view.showCategories();
+        })
+
+        this.btnWrap = document.createElement('div');
+        this.btnWrap.className = 'btn_wrap';
+        this.btnWrap.append(this.btnHome, this.btnCat);
 
         this.container = container;
         this.view = view;
@@ -84,7 +104,7 @@ export class Category extends BaseComponent{
         });
         this.infoDiv.innerHTML = this.nameCategory;
         this.scopeView = document.createElement('div');
-        this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
+        
         this.headPreView = document.createElement('div');
         this.headPreView.className = 'head_preview';
         this.headPreView.append(this.infoDiv, this.scopeView);
@@ -121,7 +141,7 @@ export class Category extends BaseComponent{
         } else {
             this.correctCount = 0;
         }
-        
+        this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
         
     }
 
@@ -216,7 +236,7 @@ export class Category extends BaseComponent{
         this.wrapper.innerHTML = '';
         let quest = this.quests[this.currentQuest];
         this.questTxt.innerHTML = quest.getQuestion(); 
-        this.wrapper.append(this.headCategory, quest.node)
+        this.wrapper.append(this.btnWrap,this.headCategory, quest.node)
         this.container.append(this.wrapper);
         if (this.setting.timeActive){
             this.second = this.setting.timeValue;
@@ -259,24 +279,8 @@ export class Category extends BaseComponent{
         let miniImg = document.createElement('div');
         miniImg.className = 'win_img';
         
-        let btnWrap = document.createElement('div');
-        btnWrap.className = 'btn_wrap';
-        let btnHome = document.createElement('button');
-        btnHome.className = 'btn_win'
-        btnHome.innerHTML = 'home';
-        btnHome.addEventListener('click',()=>{
-            this.view.showMenu();
-        })
-
-        let btnCat = document.createElement('button');
-        btnCat.className = 'btn_win'
-        btnCat.innerHTML = 'category';
-        btnCat.addEventListener('click',()=>{
-            this.view.showCategories();
-        })
-
-        btnWrap.append(btnHome,btnCat);
-        ovrContainer.append(headTxt,resultDiv, miniImg, btnWrap);
+        
+        ovrContainer.append(headTxt,resultDiv, miniImg, this.btnWrap);
         let overlay = document.createElement('div');
         overlay.className = 'ovr_win';
         overlay.append(ovrContainer);
@@ -319,7 +323,7 @@ export class Category extends BaseComponent{
     saveToLocalStorage():void{
         let objTmp = {
             correctCount:this.correctCount,
-            score:this.quests.splice(0),
+            score:this.quests.slice(0),
         }
         this.categorysStorage[this.index] = objTmp;
         if (this.answerType === AnswerType.text){
@@ -332,6 +336,7 @@ export class Category extends BaseComponent{
 
     clearResult():void{
         this.correctCount = 0;
+        this.saveToLocalStorage();
     }
 
     setScoreItems = (arrayScore:Quest[]):void => {
