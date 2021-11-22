@@ -68,6 +68,7 @@ export class Category extends BaseComponent{
         this.btnHome.className = 'btn_win'
         this.btnHome.innerHTML = 'home';
         this.btnHome.addEventListener('click',()=>{
+            clearTimeout(this.idTimer);
             this.view.showMenu();
         })
 
@@ -75,6 +76,7 @@ export class Category extends BaseComponent{
         this.btnCat.className = 'btn_win'
         this.btnCat.innerHTML = 'category';
         this.btnCat.addEventListener('click',()=>{
+            clearTimeout(this.idTimer);
             this.view.showCategories();
         })
 
@@ -254,7 +256,7 @@ export class Category extends BaseComponent{
         this.container.append(this.wrapper);
         if (this.setting.timeActive){
             this.second = this.setting.timeValue;
-            this.idTimer = setTimeout(()=>{this.setSecond(quest)},0);
+            this.idTimer = setTimeout(()=>{this.setSecond(quest)},1000);
         }
         
     }
@@ -364,7 +366,19 @@ export class Category extends BaseComponent{
             imgScore.style.backgroundImage = `url(./assets/pictures/img/${rgtAnsw.answer.imageNum}.jpg)`;
             let scoreItem:HTMLDivElement = document.createElement('div');
             scoreItem.className = 'score_item';
-            scoreItem.append(headScore,imgScore);
+
+            let iteminfo:HTMLDivElement = document.createElement('div');
+            iteminfo.className = 'item_info_score';
+            iteminfo.innerHTML = `
+                <span>${rgtAnsw.answer.author}</span>
+                <span>${rgtAnsw.answer.name}</span>
+                <span>${rgtAnsw.answer.year}</span>
+            `;
+
+            scoreItem.append(headScore,imgScore,iteminfo);
+            scoreItem.addEventListener('click', ()=>{
+                scoreItem.classList.toggle('info_score_show');
+            })
             if (item.isRightAnswered){
                 headScore.classList.add('right_answer');
             } else {

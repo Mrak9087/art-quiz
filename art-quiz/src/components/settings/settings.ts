@@ -1,6 +1,7 @@
 import './settings.css';
 import {BaseComponent} from '../baseComponent/baseComponent';
 import {ISetting} from '../interfaces/interfaces';
+import ok from '../../assets/sounds/correctanswer.mp3';
 
 
 
@@ -10,6 +11,7 @@ export class Settings extends BaseComponent{
     private activeSound: boolean = false;
     private activeTime: boolean = false;
     private rangeTxt: HTMLDivElement;
+    private okAnswer:HTMLAudioElement;
     private setting:ISetting;
     public itemSound: HTMLDivElement;
     public itemTime: HTMLDivElement;
@@ -33,6 +35,7 @@ export class Settings extends BaseComponent{
             timeActive: this.activeTime,
             timeValue: 10,
         }
+        this.okAnswer = new Audio(ok);
         this.setting = JSON.parse(localStorage.getItem('arqSetting')) || defaultSetting;
         this.activeSound = this.setting.soundActive;
         this.activeTime = this.setting.timeActive;
@@ -150,8 +153,9 @@ export class Settings extends BaseComponent{
             this.rangeSound.style.background = `linear-gradient(to right, ${this.DIS_COLOR} 0%, ${this.DIS_COLOR} ${value}%, #fff ${value}%, white 100%)`;
         } else {
             this.rangeSound.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
+            // this.okAnswer.volume = parseFloat(this.rangeSound.value);
+            // this.okAnswer.play();
         }
-        
     }
 
     changeTimeRange = () => {

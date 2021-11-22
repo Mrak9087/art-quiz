@@ -21,6 +21,7 @@ export class View extends BaseComponent{
     public container:HTMLDivElement;
     public logoWrapper:HTMLDivElement;
     public logo:HTMLDivElement;
+    public footer:HTMLDivElement;
 
     constructor(){
         super('view');
@@ -55,7 +56,16 @@ export class View extends BaseComponent{
         this.menu.init();
         this.addEventToMenu()
         this.container.append(this.logoWrapper, this.menu.node);
-        this.node.append(this.container);
+        this.footer = document.createElement('div');
+        this.footer.className = 'footer';
+        this.footer.innerHTML = `<div class="footer_container">
+                <a class="github" href="https://github.com/Mrak9087" target="blank">Mrak9087</a>
+                <span class="rss_year">2021</span>
+                <a class="rss" href="https://rs.school/js/" target="_blank" rel="noopener noreferrer">
+                    
+                </a>
+            </div>`;
+        this.node.append(this.container,this.footer);
     }
 
     createCategories():Promise<void>{

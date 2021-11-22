@@ -6,6 +6,8 @@ body{
     /* min-height: calc(100vh); */
     width: 100%;
     display: flex;
+    flex-direction: column;
+    row-gap: 20px;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
@@ -86,4 +88,47 @@ body{
 
 .btn_home:hover{
     box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
+}
+
+.footer {
+    width: 100%;
+    padding: 10px;
+}
+.footer_container {
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+.github{
+    text-decoration: none;
+    font-size: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.rss {
+    display: block;
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+    width: 86px;
+    height: 32px;
+    background-image: url('../../assets/svg/rs_school_js.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-right: 111px;
+    filter: hue-rotate(177deg) saturate(100%);
+}
+.rss_year {
+    font-size: 24px;
+    letter-spacing: -2px;
+    color: black;
+    line-height: 0.9;
+    font-weight: bold;
+    transition: 0.3s;
 }
