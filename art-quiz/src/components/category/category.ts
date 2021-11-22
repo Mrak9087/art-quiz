@@ -104,6 +104,7 @@ export class Category extends BaseComponent{
         });
         this.infoDiv.innerHTML = this.nameCategory;
         this.scopeView = document.createElement('div');
+        this.scopeView.className = 'score_view';
         
         this.headPreView = document.createElement('div');
         this.headPreView.className = 'head_preview';

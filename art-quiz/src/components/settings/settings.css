@@ -37,12 +37,17 @@
 }
 
 .setting_btn{
-    max-width: 500px;
+    max-width: 300px;
     width: 100%;
     min-width: 300px;
     background-color: #3f0d12;
     background-image: linear-gradient(315deg, #3f0d12 0%, #a71d31 74%);
+    box-shadow: 1px 6px 11px 1px rgb(0 0 0 / 70%);
+    transition: box-shadow .5s ease;
+}
 
+.setting_btn:hover{
+    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
 }
 
 .item_wrapper{

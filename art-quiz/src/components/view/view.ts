@@ -14,10 +14,13 @@ export class View extends BaseComponent{
     private menu: Menu;
     private settings: Settings;
     private type:AnswerType = AnswerType.img;
+    
     private setting: ISetting;
     private btnHome: HTMLButtonElement;
     public categoryContainer:HTMLDivElement;
     public container:HTMLDivElement;
+    public logoWrapper:HTMLDivElement;
+    public logo:HTMLDivElement;
 
     constructor(){
         super('view');
@@ -42,12 +45,16 @@ export class View extends BaseComponent{
         this.btnHome.addEventListener('click', async () => {
             this.showMenu();
         })
-
+        this.logoWrapper = document.createElement('div');
+        this.logoWrapper.className = 'logo_wrapper';
+        this.logo = document.createElement('div');
+        this.logo.className = 'logo';
+        this.logoWrapper.append(this.logo);
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
         this.addEventToMenu()
-        this.container.append(this.menu.node);
+        this.container.append(this.logoWrapper, this.menu.node);
         this.node.append(this.container);
     }
 
@@ -127,7 +134,7 @@ export class View extends BaseComponent{
     async showMenu(){
         await this.doContainer(true);
         this.container.innerHTML = '';
-        this.container.append(this.menu.node)
+        this.container.append(this.logoWrapper,this.menu.node)
         await this.doContainer(false);
     }
 
@@ -135,6 +142,7 @@ export class View extends BaseComponent{
         await this.doContainer(true);
         
         this.container.innerHTML = '';
+        this.addBtnHome();
         this.container.append(this.menu.settings.node);
         await this.doContainer(false);
     }

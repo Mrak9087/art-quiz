@@ -55,6 +55,7 @@ export class Settings extends BaseComponent{
         
         this.activeSound = this.setting.soundActive;
         this.activeTime = this.setting.timeActive;
+        
     }
 
     initItemSound():void{
@@ -86,7 +87,7 @@ export class Settings extends BaseComponent{
         this.rangeSound.value = this.setting.soundLevel.toString();
 
         this.rangeSound.disabled = !this.activeSound;
-        this.changeSoundRange();
+        
         soundWrapper.append(this.soundOff, this.rangeSound);
 
         this.itemActiveSound = document.createElement('div');
@@ -119,7 +120,7 @@ export class Settings extends BaseComponent{
         this.rangeTime.step = '5';
         this.rangeTime.value =  this.setting.timeValue.toString();
         this.rangeTime.disabled = !this.activeTime;
-        this.changeTimeRange();
+        
         this.rangeTxt = document.createElement('div');
         this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
         timeWrapper.append(this.rangeTime,this.rangeTxt);
@@ -132,6 +133,7 @@ export class Settings extends BaseComponent{
         timeTxt.className = 'item_txt';
         timeTxt.innerHTML = '<span>time</span>';
         this.itemTime.append(timeLabel,timeWrapper,this.itemActiveTime,timeTxt);
+        
         this.changeTimeRange();
         this.setItemActive(this.activeTime,this.itemActiveTime);
         
@@ -182,12 +184,13 @@ export class Settings extends BaseComponent{
             }
         }
 
-        // this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
+        this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
         if (!this.activeTime){
             this.rangeTime.style.background = `linear-gradient(to right, ${this.DIS_COLOR} 0%, ${this.DIS_COLOR} ${value}%, #fff ${value}%, white 100%)`;
         } else {
             this.rangeTime.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
         }
+        // this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
         
     }
 
