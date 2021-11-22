@@ -15,6 +15,7 @@ export class View extends BaseComponent{
     private settings: Settings;
     private type:AnswerType = AnswerType.img;
     private setting: ISetting;
+    private btnHome: HTMLButtonElement;
     public categoryContainer:HTMLDivElement;
     public container:HTMLDivElement;
 
@@ -35,6 +36,13 @@ export class View extends BaseComponent{
         this.categoryContainer = document.createElement('div');
         this.categoryContainer.className = 'category_container';
         
+        this.btnHome = document.createElement('button');
+        this.btnHome.className = 'btn_home';
+        this.btnHome.innerHTML = 'home';
+        this.btnHome.addEventListener('click', async () => {
+            this.showMenu();
+        })
+
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
@@ -91,11 +99,28 @@ export class View extends BaseComponent{
         })
     }
 
+    addBtnHome():void{
+        let btnContainer = document.createElement('div');
+        btnContainer.className = 'btn_container';
+        btnContainer.append(this.btnHome);
+        this.container.append(btnContainer);
+    }
+
     async showCategories(){
         await this.doContainer(true);
         this.container.innerHTML = '';
+        this.categoryContainer.innerHTML = '';
+        this.addBtnHome();
         this.container.append(this.categoryContainer);
         await this.createCategories();
+        await this.doContainer(false);
+    }
+
+    async showScore(category:Category){
+        await this.doContainer(true);
+        this.container.innerHTML = '';
+        this.addBtnHome();
+        category.showScore();
         await this.doContainer(false);
     }
 
@@ -117,6 +142,7 @@ export class View extends BaseComponent{
     async categoryHandler(category:Category){
         await this.doContainer(true);
         category.showQuest();
+        // category.showScore()
         await this.doContainer(false);
     }
 

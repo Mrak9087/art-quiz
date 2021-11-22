@@ -35,10 +35,12 @@ export class Category extends BaseComponent{
     private questTime:HTMLDivElement;
     private headCategory:HTMLDivElement;
     private wrapper:HTMLDivElement;
+    private scoreWrapper:HTMLDivElement;
     private idTimer:NodeJS.Timeout;//NodeJS.Timeout
     private nameCategory:string;
     private scoreContainer: HTMLDivElement;
     private scoreItems:HTMLDivElement[];
+    private scoreBtn:HTMLButtonElement;
 
     private categorysStorage:IStorageCategory[];
     
@@ -50,7 +52,7 @@ export class Category extends BaseComponent{
         this.scoreItems = [];
         this.correctCount = 0;
         this.currentQuest = 0;
-
+        this.nameCategory = `Категория ${this.index+1}`;
     }
 
     init(container:HTMLDivElement, view:View, setting:ISetting,answerType: AnswerType = AnswerType.text):void{
@@ -60,17 +62,6 @@ export class Category extends BaseComponent{
             this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
         }
 
-        if (this.categorysStorage[this.index]){
-            this.correctCount = this.categorysStorage[this.index].correctCount || 0;
-            if (this.categorysStorage[this.index].score.length){
-                this.setScoreItems(this.categorysStorage[this.index].score);
-            }
-            
-        } else {
-            this.correctCount = 0;
-        }
-        
-        
         this.container = container;
         this.view = view;
         this.setting = setting;
@@ -83,7 +74,14 @@ export class Category extends BaseComponent{
         this.answerType = answerType;
         this.infoDiv = document.createElement('div');
         this.infoDiv.className = 'cat_name';
-        this.nameCategory = `Категория ${this.index+1}`;
+
+        this.scoreBtn = document.createElement('button');
+        this.scoreBtn.className = 'score_btn';
+        this.scoreBtn.innerHTML = 'score';
+        this.scoreBtn.addEventListener('click',(e)=>{
+            e.stopPropagation()
+            view.showScore(this);
+        });
         this.infoDiv.innerHTML = this.nameCategory;
         this.scopeView = document.createElement('div');
         this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
@@ -109,7 +107,22 @@ export class Category extends BaseComponent{
         this.wrapper.className = 'category_wrapper';
         this.wrapper.append(this.headCategory);
 
+        this.scoreWrapper = document.createElement('div');
+        this.scoreWrapper.className = 'score_wrapper'
         this.node.append(this.headPreView, this.imgPreView);
+
+        if (this.categorysStorage[this.index]){
+            this.correctCount = this.categorysStorage[this.index].correctCount || 0;
+            if (this.categorysStorage[this.index].score.length){
+                this.setScoreItems(this.categorysStorage[this.index].score);
+                this.node.append(this.scoreBtn);
+            }
+
+        } else {
+            this.correctCount = 0;
+        }
+        
+        
     }
 
     toFormQuestion():void{
@@ -212,6 +225,15 @@ export class Category extends BaseComponent{
         
     }
 
+    showScore():void{
+        
+        this.scoreWrapper.innerHTML = '';
+        this.scoreItems.forEach((item)=>{
+            this.scoreWrapper.append(item);
+        })
+        this.container.append(this.scoreWrapper)
+    }
+
     async nextQuest(){
         this.currentQuest++;
         if (this.currentQuest === this.quests.length) {
@@ -312,7 +334,7 @@ export class Category extends BaseComponent{
         this.correctCount = 0;
     }
 
-    setScoreItems(arrayScore:Quest[]):void{
+    setScoreItems = (arrayScore:Quest[]):void => {
         arrayScore.forEach((item)=>{
             let headScore:HTMLDivElement = document.createElement('div');
             headScore.className = 'head_preview';
