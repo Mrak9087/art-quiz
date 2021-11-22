@@ -44,6 +44,9 @@ export class Category extends BaseComponent{
     private btnHome:HTMLButtonElement;
     private btnCat:HTMLButtonElement;
     private btnWrap:HTMLDivElement;
+    
+    private bulletContainer:HTMLDivElement;
+    private bullets:HTMLDivElement[] = [];
 
     private categorysStorage:IStorageCategory[];
     
@@ -134,6 +137,8 @@ export class Category extends BaseComponent{
         this.wrapper = document.createElement('div');
         this.wrapper.className = 'category_wrapper';
         this.wrapper.append(this.headCategory);
+        this.bulletContainer = document.createElement('div');
+        this.bulletContainer.className = 'bullet_container';
 
         this.scoreWrapper = document.createElement('div');
         this.scoreWrapper.className = 'score_wrapper'
@@ -150,6 +155,21 @@ export class Category extends BaseComponent{
             this.correctCount = 0;
         }
         this.scopeView.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`
+        this.createBullet();
+        
+    }
+
+    createBullet(){
+        this.bulletContainer.innerHTML = '';
+        this.bullets.splice(0, -1);
+        for(let i = 0; i < Category.MAX_COUNT_QUEST; i++){
+            const bullet:HTMLDivElement = document.createElement('div');  
+            bullet.className = 'bullet';
+            this.bullets.push(bullet);
+        }
+        this.bullets.forEach((item) => {
+            this.bulletContainer.append(item);
+        })
         
     }
 
@@ -227,7 +247,7 @@ export class Category extends BaseComponent{
                 if (this.setting.soundActive){
                     this.okAnswer.play();
                 }
-                
+                this.bullets[this.currentQuest].classList.add('ans_cor')
                 this.correctCount++;
                 answer.node.classList.add('correct');
                 quest.answered(true);
@@ -235,6 +255,7 @@ export class Category extends BaseComponent{
                 if (this.setting.soundActive){
                     this.wrongAnswer.play();
                 }
+                this.bullets[this.currentQuest].classList.add('ans_err')
 
                 answer.node.classList.add('incorrect');
                 quest.answered(false);
@@ -252,7 +273,7 @@ export class Category extends BaseComponent{
         this.wrapper.innerHTML = '';
         let quest = this.quests[this.currentQuest];
         this.questTxt.innerHTML = quest.getQuestion(); 
-        this.wrapper.append(this.btnWrap,this.headCategory, quest.node)
+        this.wrapper.append(this.btnWrap,this.headCategory, this.bulletContainer,quest.node)
         this.container.append(this.wrapper);
         if (this.setting.timeActive){
             this.second = this.setting.timeValue;

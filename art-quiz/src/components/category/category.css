@@ -225,3 +225,26 @@
 .info_score_show .item_info_score{
     bottom: 0;
 }
+
+.bullet_container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+}
+
+.bullet{
+    width: 15px;
+    height: 15px;
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.ans_cor{
+    background-color: green;
+}
+
+.ans_err{
+    background-color: red;
+}
