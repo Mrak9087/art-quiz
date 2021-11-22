@@ -111,7 +111,12 @@ export class Category extends BaseComponent{
         this.headPreView.append(this.infoDiv, this.scopeView);
         this.imgPreView = document.createElement('div');
         this.imgPreView.className = 'preview';
-        this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
+        if (this.answerType === AnswerType.text){
+            this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST}.jpg)`
+        } else {
+            this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${this.index*Category.MAX_COUNT_QUEST + 120}.jpg)`
+        }
+        
         if (!this.categorysStorage[this.index]){
             this.imgPreView.style.filter = 'grayscale(100%)';
         }
@@ -147,7 +152,15 @@ export class Category extends BaseComponent{
     }
 
     toFormQuestion():void{
-        let tmpArr = images.slice(this.startIndex,this.endIndex);
+        let tmpArr:Array<any> = [];
+        if (this.answerType === AnswerType.text){
+            tmpArr = images.slice(this.startIndex,this.endIndex);
+        } else {
+            this.startIndex = this.startIndex*Category.MAX_COUNT_QUEST+120;
+            this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST;
+            tmpArr = images.slice(this.startIndex,this.endIndex);
+        }
+        
         tmpArr.forEach((item) => {
             let answers:IAnswer[] = [];
             
