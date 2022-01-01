@@ -1,4 +1,4 @@
-.settings{
+.settings {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -6,7 +6,7 @@
     row-gap: 100px;
 }
 
-.btn_general{
+.btn_general {
     padding: 20px 0 20px;
     font-family: Arial;
     font-size: 36px;
@@ -15,42 +15,42 @@
     text-align: center;
     outline: none;
     border: none;
-    
+
     cursor: pointer;
     transition: all 0.5s ease;
     color: white;
 }
 
-.btn_save{
+.btn_save {
     width: 250px;
     background-color: #c2b6b6;
     background-image: linear-gradient(315deg, #c2b6b6 0%, #576574 74%);
     border-radius: 30px;
 }
 
-.btn_save:hover{
+.btn_save:hover {
     transform: scale(1.1);
 }
 
-.btn_save:active{
+.btn_save:active {
     transform: scale(1);
 }
 
-.setting_btn{
+.setting_btn {
     max-width: 300px;
     width: 100%;
     min-width: 300px;
     background-color: #3f0d12;
     background-image: linear-gradient(315deg, #3f0d12 0%, #a71d31 74%);
     box-shadow: 1px 6px 11px 1px rgb(0 0 0 / 70%);
-    transition: box-shadow .5s ease;
+    transition: box-shadow 0.5s ease;
 }
 
-.setting_btn:hover{
+.setting_btn:hover {
     box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
 }
 
-.item_wrapper{
+.item_wrapper {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -59,13 +59,13 @@
     row-gap: 50px;
 }
 
-.btn_wrapper{
+.btn_wrapper {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.item_setting{
+.item_setting {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -77,25 +77,25 @@
     box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.4);
 }
 
-.item_label{
+.item_label {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
 
-.sound_label{
+.sound_label {
     width: 100px;
     padding-top: 40%;
     background-image: url('../../assets/svg/sound.svg');
 }
 
-.time_label{
+.time_label {
     width: 100px;
     padding-top: 40%;
     background-image: url('../../assets/svg/time.svg');
 }
 
-.sound_off{
+.sound_off {
     outline: none;
     border: none;
     width: 35px;
@@ -108,7 +108,7 @@
     cursor: pointer;
 }
 
-.sound_wrapper{
+.sound_wrapper {
     display: flex;
     width: 100%;
     align-items: center;
@@ -116,16 +116,16 @@
     column-gap: 25px;
 }
 
-.progress{
+.progress {
     -webkit-appearance: none;
     width: 210px;
     height: 6px;
-    background: linear-gradient(90deg,rgb(129, 129, 129) 0,dimgray 40%,#e5e5e5 0,#e5e5e5);
+    background: linear-gradient(90deg, rgb(129, 129, 129) 0, dimgray 40%, #e5e5e5 0, #e5e5e5);
     border: 1px solid dimgray;
     border-radius: 5px;
     cursor: pointer;
     outline: none;
-    transition: all .45s ease-in;
+    transition: all 0.45s ease-in;
 }
 
 .progress::-webkit-slider-thumb {
@@ -135,38 +135,37 @@
     -webkit-appearance: none;
     cursor: pointer;
     background: rgb(95, 89, 89);
-   
 }
 
-.progress:disabled::-webkit-slider-thumb{
+.progress:disabled::-webkit-slider-thumb {
     background: #ccc;
 }
 
-.time_wrapper{
+.time_wrapper {
     display: flex;
     width: 100%;
     justify-content: space-around;
     align-items: center;
 }
 
-.time_wrapper span{
+.time_wrapper span {
     color: dimgray;
     font-family: Arial;
     font-size: 36px;
     font-style: normal;
 }
 
-.active_sound{
+.active_sound {
     width: 32px;
     height: 32px;
     border: 2px solid dimgray;
     cursor: pointer;
 }
 
-.active_item{
+.active_item {
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/svg/active.svg");
+    background-image: url('../../assets/svg/active.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

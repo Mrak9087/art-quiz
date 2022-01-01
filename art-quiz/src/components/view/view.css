@@ -1,8 +1,8 @@
-body{
+body {
     background: #ddd;
 }
 
-.view{
+.view {
     /* min-height: calc(100vh); */
     width: 100%;
     display: flex;
@@ -13,7 +13,7 @@ body{
     margin: 0 auto;
 }
 
-.logo_wrapper{
+.logo_wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -21,7 +21,7 @@ body{
 }
 
 .logo {
-    background-image: url("../../assets/svg/logo.svg");
+    background-image: url('../../assets/svg/logo.svg');
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: 70%;
@@ -31,7 +31,7 @@ body{
     width: 250px;
 }
 
-.container{
+.container {
     position: relative;
     width: 100%;
     min-height: calc(100vh - 100px);
@@ -46,13 +46,13 @@ body{
     padding-top: 20px;
 }
 
-.btn_container{
+.btn_container {
     display: flex;
     width: 100%;
     justify-content: center;
 }
 
-.category_container{
+.category_container {
     max-width: 1000px;
     width: 100%;
     display: flex;
@@ -63,11 +63,11 @@ body{
     column-gap: 10px;
 }
 
-.hidden{
+.hidden {
     transform: translateX(-200%);
 }
 
-.btn_home{
+.btn_home {
     min-width: 150px;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -78,15 +78,15 @@ body{
     background-color: #661004;
     padding: 14px 7px 12px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #ffffff;
     outline: none;
     border: none;
     cursor: pointer;
     box-shadow: 1px 6px 11px 1px rgb(0 0 0 / 70%);
-    transition: box-shadow .5s ease;
+    transition: box-shadow 0.5s ease;
 }
 
-.btn_home:hover{
+.btn_home:hover {
     box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
 }
 
@@ -103,7 +103,7 @@ body{
     max-width: 1140px;
     margin: 0 auto;
 }
-.github{
+.github {
     text-decoration: none;
     font-size: 16px;
     font-size: 20px;

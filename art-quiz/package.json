@@ -31,7 +31,8 @@
     "watch": "webpack --watch",
     "start": "webpack serve",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "pretty": "prettier --write src/** --check"
   },
   "dependencies": {
     "copy-webpack-plugin": "^9.0.1"

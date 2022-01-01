@@ -3,49 +3,49 @@ import { BaseComponent } from '../baseComponent/baseComponent';
 import { Settings } from '../settings/settings';
 
 export class Menu extends BaseComponent {
-  private menuWrapper:HTMLDivElement;
+    private menuWrapper: HTMLDivElement;
 
-  public artistQuiz:HTMLDivElement;
+    public artistQuiz: HTMLDivElement;
 
-  public picturesQuiz:HTMLDivElement;
+    public picturesQuiz: HTMLDivElement;
 
-  public settings: Settings;
+    public settings: Settings;
 
-  constructor() {
-    super('menu_container');
-    this.menuWrapper = document.createElement('div');
-    this.menuWrapper.className = 'menu_wrapper';
-    this.node.append(this.menuWrapper);
-  }
+    constructor() {
+        super('menu_container');
+        this.menuWrapper = document.createElement('div');
+        this.menuWrapper.className = 'menu_wrapper';
+        this.node.append(this.menuWrapper);
+    }
 
-  init() {
-    const quizContainer = document.createElement('div');
-    quizContainer.className = 'quiz_container';
-    this.menuWrapper.append(quizContainer);
-    const artImg = document.createElement('div');
-    artImg.className = 'menu_img img_artist';
-    const artText = document.createElement('div');
-    artText.className = 'item_txt';
-    artText.innerHTML = '<span>artist</span> quiz';
-    this.artistQuiz = document.createElement('div');
-    this.artistQuiz.className = 'menu_item';
-    this.artistQuiz.append(artImg, artText);
-    const picImg = document.createElement('div');
-    picImg.className = 'menu_img img_picture';
-    const picText = document.createElement('div');
-    picText.className = 'item_txt';
-    picText.innerHTML = '<span>picture</span> quiz';
-    this.picturesQuiz = document.createElement('div');
-    this.picturesQuiz.className = 'menu_item ';
-    this.picturesQuiz.append(picImg, picText);
-    quizContainer.append(this.artistQuiz, this.picturesQuiz);
+    init() {
+        const quizContainer = document.createElement('div');
+        quizContainer.className = 'quiz_container';
+        this.menuWrapper.append(quizContainer);
+        const artImg = document.createElement('div');
+        artImg.className = 'menu_img img_artist';
+        const artText = document.createElement('div');
+        artText.className = 'item_txt';
+        artText.innerHTML = '<span>artist</span> quiz';
+        this.artistQuiz = document.createElement('div');
+        this.artistQuiz.className = 'menu_item';
+        this.artistQuiz.append(artImg, artText);
+        const picImg = document.createElement('div');
+        picImg.className = 'menu_img img_picture';
+        const picText = document.createElement('div');
+        picText.className = 'item_txt';
+        picText.innerHTML = '<span>picture</span> quiz';
+        this.picturesQuiz = document.createElement('div');
+        this.picturesQuiz.className = 'menu_item ';
+        this.picturesQuiz.append(picImg, picText);
+        quizContainer.append(this.artistQuiz, this.picturesQuiz);
 
-    const settingContainer:HTMLDivElement = document.createElement('div');
-    settingContainer.className = 'setting_container';
-    this.settings = new Settings();
-    this.settings.init();
-    settingContainer.append(this.settings.settingBtn);
+        const settingContainer: HTMLDivElement = document.createElement('div');
+        settingContainer.className = 'setting_container';
+        this.settings = new Settings();
+        this.settings.init();
+        settingContainer.append(this.settings.settingBtn);
 
-    this.menuWrapper.append(settingContainer);
-  }
+        this.menuWrapper.append(settingContainer);
+    }
 }

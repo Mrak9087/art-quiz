@@ -1,4 +1,4 @@
-.quest{
+.quest {
     position: relative;
     max-width: 1000px;
     width: 100%;
@@ -9,7 +9,7 @@
     row-gap: 15px;
 }
 
-.question{
+.question {
     width: 100%;
     font-size: 24px;
     padding: 21px 0 21px;
@@ -17,14 +17,14 @@
     justify-content: center;
 }
 
-.quest_images{
+.quest_images {
     width: 100%;
     display: flex;
     justify-content: center;
     /* padding-top: 80%; */
 }
 
-.quest_img{
+.quest_img {
     max-width: 765px;
     width: 100%;
     padding-top: 80%;
@@ -33,11 +33,11 @@
     background-repeat: no-repeat;
 }
 
-.quest_images img{
+.quest_images img {
     width: 100%;
 }
 
-.answer_container{
+.answer_container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -45,7 +45,7 @@
     gap: 20px;
 }
 
-.answer_overlay{
+.answer_overlay {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -59,11 +59,11 @@
     transition: left 0.5s ease;
 }
 
-.ovr_hidden{
+.ovr_hidden {
     left: -100%;
 }
 
-.ovr_container{
+.ovr_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,7 +76,7 @@
     row-gap: 10px;
 }
 
-.mini_img{
+.mini_img {
     width: 100%;
     padding-top: 80%;
     background-size: contain;
@@ -84,7 +84,7 @@
     background-repeat: no-repeat;
 }
 
-.picture_info{
+.picture_info {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -97,9 +97,9 @@
     font-weight: bold;
 }
 
-.ovr_container .btn_next{
+.ovr_container .btn_next {
     max-width: 400px;
-    width:100%;
+    width: 100%;
     padding: 15px 0 15px;
     border-radius: 10px;
     background-color: #29539b;
@@ -112,26 +112,26 @@
     transition: transform 0.3s ease;
 }
 
-.btn_next:hover{
+.btn_next:hover {
     transform: scale(1.05);
 }
 
-.btn_next:active{
+.btn_next:active {
     transform: scale(1);
 }
 
-.ok_error{
+.ok_error {
     width: 40px;
-    height:40px;
+    height: 40px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
-.ok{
+.ok {
     background-image: url('../../assets/svg/ok.svg');
 }
 
-.error{
+.error {
     background-image: url('../../assets/svg/error.svg');
 }

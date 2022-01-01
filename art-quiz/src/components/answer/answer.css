@@ -1,4 +1,4 @@
-.answer{
+.answer {
     max-width: 385px;
     width: 100%;
     font-size: 24px;
@@ -12,30 +12,29 @@
     transition: all 0.5s ease;
 }
 
-.answer:hover{
+.answer:hover {
     transform: scale(1.09);
 }
 
-.correct{
+.correct {
     background-color: green;
 }
 
-.incorrect{
+.incorrect {
     background-color: red;
 }
 
-.type_img{
+.type_img {
     padding-top: 34%;
-    
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 10px;
 }
 
-@media screen and (max-width:500px) {
-
-    .answer{
+@media screen and (max-width: 500px) {
+    .answer {
         max-width: 250px;
         width: 100%;
         font-size: 18px;

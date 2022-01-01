@@ -1,4 +1,5 @@
-.category, .score_item{
+.category,
+.score_item {
     width: 184px;
     display: flex;
     flex-direction: column;
@@ -7,7 +8,7 @@
     overflow: hidden;
 }
 
-.category_wrapper{
+.category_wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -16,7 +17,7 @@
     row-gap: 10px;
 }
 
-.score_wrapper{
+.score_wrapper {
     max-width: 1000px;
     width: 100%;
     display: flex;
@@ -27,14 +28,15 @@
     padding: 25px;
 }
 
-.quest_txt,.quest_time{
+.quest_txt,
+.quest_time {
     font-size: 24px;
     font-weight: bold;
     color: black;
 }
 
-.head_category{
-    max-width:  1000px;
+.head_category {
+    max-width: 1000px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -43,13 +45,13 @@
     padding: 21px 0 21px;
 }
 
-.head_preview{
+.head_preview {
     background-color: #7b6a58;
     padding: 15px 5px;
     border-top-left-radius: 15px;
 }
 
-.cat_name{
+.cat_name {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     font-weight: bold;
@@ -57,13 +59,13 @@
     justify-content: flex-end;
 }
 
-.score_view{
+.score_view {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
     font-weight: bold;
 }
 
-.preview{
+.preview {
     width: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -71,7 +73,7 @@
     padding-top: 80%;
 }
 
-.ovr_win{
+.ovr_win {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -82,14 +84,14 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 3;
-    transition: left .5s ease;
+    transition: left 0.5s ease;
 }
 
-.ovr_win_show{
+.ovr_win_show {
     left: 0;
 }
 
-.ovr_win_container{
+.ovr_win_container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -102,7 +104,7 @@
     row-gap: 30px;
 }
 
-.head_txt{
+.head_txt {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -116,29 +118,29 @@
     text-transform: uppercase;
 }
 
-.win_img{
+.win_img {
     height: 160px;
     width: 200px;
-    background-image: url("../../assets/image/congratulation.png");
+    background-image: url('../../assets/image/congratulation.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.result{
+.result {
     font-size: 48px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     color: green;
 }
 
-.btn_wrap{
+.btn_wrap {
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
-.btn_win{
+.btn_win {
     min-width: 150px;
     font-family: Arial, Helvetica, sans-serif;
     font-style: normal;
@@ -149,19 +151,19 @@
     background-color: #661004;
     padding: 14px 7px 12px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #ffffff;
     outline: none;
     border: none;
     cursor: pointer;
     box-shadow: 1px 6px 11px 1px rgb(0 0 0 / 70%);
-    transition: box-shadow .5s ease;
+    transition: box-shadow 0.5s ease;
 }
 
-.btn_win:hover{
+.btn_win:hover {
     box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 70%);
 }
 
-.score_btn{
+.score_btn {
     position: absolute;
     bottom: -100%;
     left: 0;
@@ -175,18 +177,19 @@
     background-color: #661004;
     padding: 14px 7px 12px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #ffffff;
     outline: none;
     border: none;
     cursor: pointer;
     transition: bottom 0.5s ease;
 }
 
-.category:hover .score_btn{
+.category:hover .score_btn {
     bottom: 0;
 }
 
-.right_answer, .no_right_answer{
+.right_answer,
+.no_right_answer {
     display: flex;
     justify-content: flex-end;
     font-family: Arial, Helvetica, sans-serif;
@@ -194,15 +197,15 @@
     font-size: 18px;
 }
 
-.right_answer{
+.right_answer {
     background-color: green;
 }
 
-.no_right_answer{
+.no_right_answer {
     background-color: red;
 }
 
-.item_info_score{
+.item_info_score {
     position: absolute;
     width: 100%;
     min-height: 80%;
@@ -222,18 +225,18 @@
     transition: bottom 0.5s ease;
 }
 
-.info_score_show .item_info_score{
+.info_score_show .item_info_score {
     bottom: 0;
 }
 
-.bullet_container{
+.bullet_container {
     width: 100%;
     display: flex;
     justify-content: center;
     column-gap: 10px;
 }
 
-.bullet{
+.bullet {
     width: 15px;
     height: 15px;
     border: 2px solid black;
@@ -241,10 +244,10 @@
     background-color: transparent;
 }
 
-.ans_cor{
+.ans_cor {
     background-color: green;
 }
 
-.ans_err{
+.ans_err {
     background-color: red;
 }
