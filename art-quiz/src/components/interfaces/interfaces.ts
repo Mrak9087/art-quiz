@@ -1,5 +1,5 @@
 export interface IAnswer{
-    right:boolean, 
+    right:boolean,
     answer:IAnswerContent
 }
 
@@ -21,4 +21,3 @@ export interface IStorageCategory{
     correctCount:number,
     score:any[],
 }
-

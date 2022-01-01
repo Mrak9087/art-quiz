@@ -129,8 +129,8 @@
 }
 
 .progress::-webkit-slider-thumb {
-    width: 15px;
-    height: 15px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     -webkit-appearance: none;
     cursor: pointer;
