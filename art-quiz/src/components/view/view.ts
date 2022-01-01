@@ -5,7 +5,6 @@ import { Category } from '../category/category';
 import { AnswerType } from '../enums/enums';
 import { Menu } from '../menu/menu';
 import { Settings } from '../settings/settings';
-import { Answer } from '../answer/answer';
 import { ISetting } from '../interfaces/interfaces';
 
 export class View extends BaseComponent {

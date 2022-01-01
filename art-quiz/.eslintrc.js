@@ -6,7 +6,8 @@ module.exports = {
   extends: [
     // 'airbnb-base',
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -29,6 +30,7 @@ module.exports = {
   },
   rules: {
     "import/extensions": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
 };
