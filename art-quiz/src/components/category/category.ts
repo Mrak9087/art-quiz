@@ -358,11 +358,10 @@ export class Category extends BaseComponent {
     }
 
     saveToLocalStorage(): void {
-        const objTmp = {
-            correctCount: this.correctCount,
-            score: this.quests.slice(0),
-        };
-        this.categorysStorage[this.index] = objTmp;
+        this.categorysStorage[this.index] = {
+            correctCount:this.correctCount,
+            score:this.quests.slice(0),
+        }
         if (this.answerType === AnswerType.text) {
             localStorage.setItem('artArtistCategorys', JSON.stringify(this.categorysStorage));
         } else {
