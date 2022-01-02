@@ -3,7 +3,7 @@ import './category.css';
 import { Quest } from '../quest/quest';
 import { images } from '../images';
 import { Answer } from '../answer/answer';
-import { IAnswer, ISetting, IStorageCategory } from '../interfaces/interfaces';
+import { IAnswer, ISetting, IStorageCategory, IAnswerContent} from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { View } from '../view/view';
 import { AnswerType } from '../enums/enums';
@@ -190,7 +190,7 @@ export class Category extends BaseComponent {
     }
 
     toFormQuestion(): void {
-        let tmpArr: Array<any> = [];
+        let tmpArr: Array<IAnswerContent> = [];
         if (this.answerType === AnswerType.text) {
             tmpArr = images.slice(this.startIndex, this.endIndex);
         } else {
@@ -204,7 +204,7 @@ export class Category extends BaseComponent {
 
             answers.push({ right: true, answer: item });
             this.addIncorrectAnswers(answers);
-            answers = this.shuffle(answers);
+            answers = this.shuffleAnswer(answers);
             const quest = new Quest(this.answerType);
             if (this.answerType === AnswerType.text) {
                 const questImages = createHTMLElement('div', 'quest_img');
@@ -242,7 +242,7 @@ export class Category extends BaseComponent {
         });
     }
 
-    shuffle(array: Array<any>): Array<any> {
+    shuffleAnswer(array: Array<IAnswer>): Array<IAnswer> {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
