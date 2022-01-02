@@ -3,14 +3,14 @@ import './category.css';
 import { Quest } from '../quest/quest';
 import { images } from '../images';
 import { Answer } from '../answer/answer';
-import { IAnswer, ISetting, IStorageCategory, IAnswerContent} from '../interfaces/interfaces';
+import { IAnswer, ISetting, IStorageCategory, IAnswerContent } from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { View } from '../view/view';
 import { AnswerType } from '../enums/enums';
 import ok from '../../assets/sounds/correctanswer.mp3';
 import wrong from '../../assets/sounds/wronganswer.mp3';
 import endround from '../../assets/sounds/endround.mp3';
-import {createHTMLElement, getRandomNum} from '../helpers/helpers';
+import { createHTMLElement, getRandomNum } from '../helpers/helpers';
 
 export class Category extends BaseComponent {
     static readonly MAX_COUNT_QUEST: number = 10;
