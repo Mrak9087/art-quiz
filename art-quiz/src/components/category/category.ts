@@ -10,9 +10,11 @@ import { AnswerType } from '../enums/enums';
 import ok from '../../assets/sounds/correctanswer.mp3';
 import wrong from '../../assets/sounds/wronganswer.mp3';
 import endround from '../../assets/sounds/endround.mp3';
+import {createHTMLElement, getRandomNum} from '../helpers/helpers';
 
 export class Category extends BaseComponent {
     static readonly MAX_COUNT_QUEST: number = 10;
+    readonly PICTURE_QUIZ_START: number = 120;
 
     private quests: Quest[];
 
@@ -22,17 +24,17 @@ export class Category extends BaseComponent {
 
     private endIndex: number;
 
-    private headPreView: HTMLDivElement;
+    private headPreView: HTMLElement;
 
-    private scopeView: HTMLDivElement;
+    private scopeView: HTMLElement;
 
-    private infoDiv: HTMLDivElement;
+    private infoDiv: HTMLElement;
 
-    private imgPreView: HTMLDivElement;
+    private imgPreView: HTMLElement;
 
     private currentQuest: number;
 
-    private container: HTMLDivElement;
+    private container: HTMLElement;
 
     private view: View;
 
@@ -48,35 +50,35 @@ export class Category extends BaseComponent {
 
     private second: number;
 
-    private questTxt: HTMLDivElement;
+    private questTxt: HTMLElement;
 
-    private questTime: HTMLDivElement;
+    private questTime: HTMLElement;
 
-    private headCategory: HTMLDivElement;
+    private headCategory: HTMLElement;
 
-    private wrapper: HTMLDivElement;
+    private wrapper: HTMLElement;
 
-    private scoreWrapper: HTMLDivElement;
+    private scoreWrapper: HTMLElement;
 
     private idTimer: NodeJS.Timeout;
 
     private nameCategory: string;
 
-    private scoreContainer: HTMLDivElement;
+    private scoreContainer: HTMLElement;
 
-    private scoreItems: HTMLDivElement[];
+    private scoreItems: HTMLElement[];
 
-    private scoreBtn: HTMLButtonElement;
+    private scoreBtn: HTMLElement;
 
-    private btnHome: HTMLButtonElement;
+    private btnHome: HTMLElement;
 
-    private btnCat: HTMLButtonElement;
+    private btnCat: HTMLElement;
 
-    private btnWrap: HTMLDivElement;
+    private btnWrap: HTMLElement;
 
-    private bulletContainer: HTMLDivElement;
+    private bulletContainer: HTMLElement;
 
-    private bullets: HTMLDivElement[] = [];
+    private bullets: HTMLElement[] = [];
 
     private categorysStorage: IStorageCategory[];
 
@@ -98,24 +100,19 @@ export class Category extends BaseComponent {
         } else {
             this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
         }
-        this.btnHome = document.createElement('button');
-        this.btnHome.className = 'btn_win';
-        this.btnHome.innerHTML = 'home';
+        this.btnHome = createHTMLElement('button', 'btn_win', 'home');
         this.btnHome.addEventListener('click', () => {
             clearTimeout(this.idTimer);
             this.view.showMenu();
         });
 
-        this.btnCat = document.createElement('button');
-        this.btnCat.className = 'btn_win';
-        this.btnCat.innerHTML = 'category';
+        this.btnCat = createHTMLElement('button', 'btn_win', 'category');
         this.btnCat.addEventListener('click', () => {
             clearTimeout(this.idTimer);
             this.view.showCategories();
         });
 
-        this.btnWrap = document.createElement('div');
-        this.btnWrap.className = 'btn_wrap';
+        this.btnWrap = createHTMLElement('div', 'btn_wrap');
         this.btnWrap.append(this.btnHome, this.btnCat);
 
         this.container = container;
@@ -128,32 +125,26 @@ export class Category extends BaseComponent {
         this.endRound = new Audio(endround);
         this.endRound.volume = setting.soundLevel;
         this.answerType = answerType;
-        this.infoDiv = document.createElement('div');
-        this.infoDiv.className = 'cat_name';
+        this.infoDiv = createHTMLElement('div', 'cat_name');
 
-        this.scoreBtn = document.createElement('button');
-        this.scoreBtn.className = 'score_btn';
-        this.scoreBtn.innerHTML = 'score';
+        this.scoreBtn = createHTMLElement('button', 'score_btn', 'score');
         this.scoreBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             view.showScore(this);
         });
         this.infoDiv.innerHTML = this.nameCategory;
-        this.scopeView = document.createElement('div');
-        this.scopeView.className = 'score_view';
+        this.scopeView = createHTMLElement('div', 'score_view');
 
-        this.headPreView = document.createElement('div');
-        this.headPreView.className = 'head_preview';
+        this.headPreView = createHTMLElement('div', 'head_preview');
         this.headPreView.append(this.infoDiv, this.scopeView);
-        this.imgPreView = document.createElement('div');
-        this.imgPreView.className = 'preview';
+        this.imgPreView = createHTMLElement('div', 'preview');
         if (this.answerType === AnswerType.text) {
             this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${
                 this.index * Category.MAX_COUNT_QUEST
             }.jpg)`;
         } else {
             this.imgPreView.style.backgroundImage = `url(./assets/pictures/img/${
-                this.index * Category.MAX_COUNT_QUEST + 120
+                this.index * Category.MAX_COUNT_QUEST + this.PICTURE_QUIZ_START
             }.jpg)`;
         }
 
@@ -162,21 +153,15 @@ export class Category extends BaseComponent {
         }
         this.toFormQuestion();
 
-        this.headCategory = document.createElement('div');
-        this.headCategory.className = 'head_category';
-        this.questTxt = document.createElement('div');
-        this.questTxt.className = 'quest_txt';
-        this.questTime = document.createElement('div');
-        this.questTime.className = 'quest_time';
+        this.headCategory = createHTMLElement('div', 'head_category');
+        this.questTxt = createHTMLElement('div', 'quest_txt');
+        this.questTime = createHTMLElement('div', 'quest_time');
         this.headCategory.append(this.questTxt, this.questTime);
-        this.wrapper = document.createElement('div');
-        this.wrapper.className = 'category_wrapper';
+        this.wrapper = createHTMLElement('div', 'category_wrapper');
         this.wrapper.append(this.headCategory);
-        this.bulletContainer = document.createElement('div');
-        this.bulletContainer.className = 'bullet_container';
+        this.bulletContainer = createHTMLElement('div', 'bullet_container');
 
-        this.scoreWrapper = document.createElement('div');
-        this.scoreWrapper.className = 'score_wrapper';
+        this.scoreWrapper = createHTMLElement('div', 'score_wrapper');
         this.node.append(this.headPreView, this.imgPreView);
 
         if (this.categorysStorage[this.index]) {
@@ -196,8 +181,7 @@ export class Category extends BaseComponent {
         this.bulletContainer.innerHTML = '';
         this.bullets.splice(0, -1);
         for (let i = 0; i < Category.MAX_COUNT_QUEST; i++) {
-            const bullet: HTMLDivElement = document.createElement('div');
-            bullet.className = 'bullet';
+            const bullet = createHTMLElement('div', 'bullet');
             this.bullets.push(bullet);
         }
         this.bullets.forEach((item) => {
@@ -210,7 +194,7 @@ export class Category extends BaseComponent {
         if (this.answerType === AnswerType.text) {
             tmpArr = images.slice(this.startIndex, this.endIndex);
         } else {
-            this.startIndex = this.index * Category.MAX_COUNT_QUEST + 120;
+            this.startIndex = this.index * Category.MAX_COUNT_QUEST + this.PICTURE_QUIZ_START;
             this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST;
             tmpArr = images.slice(this.startIndex, this.endIndex);
         }
@@ -223,8 +207,7 @@ export class Category extends BaseComponent {
             answers = this.shuffle(answers);
             const quest = new Quest(this.answerType);
             if (this.answerType === AnswerType.text) {
-                const questImages = document.createElement('div');
-                questImages.className = 'quest_img';
+                const questImages = createHTMLElement('div', 'quest_img');
                 questImages.style.cssText = `background-image:url(./assets/pictures/img/${item.imageNum}.jpg)`;
                 quest.init(questImages, answers);
             } else {
@@ -240,10 +223,10 @@ export class Category extends BaseComponent {
     }
 
     addIncorrectAnswers(answers: IAnswer[]): void {
-        let incorrectIndex = this.getRandomNum(0, 9);
+        let incorrectIndex = getRandomNum(0, 9);
         for (let i = 0; i < 3; i++) {
             while (answers.find((item) => item.answer.author === images[incorrectIndex].author)) {
-                incorrectIndex = this.getRandomNum(0, images.length - 1);
+                incorrectIndex = getRandomNum(0, images.length - 1);
             }
             answers.push({ right: false, answer: images[incorrectIndex] });
         }
@@ -266,11 +249,6 @@ export class Category extends BaseComponent {
         }
         return array;
     }
-
-    getRandomNum = (min: number, max: number): number => {
-        const rand = min + Math.random() * (max + 1 - min);
-        return Math.floor(rand);
-    };
 
     answerHandler(quest: Quest, answer: Answer) {
         if (!quest.getAnswered()) {
@@ -335,20 +313,14 @@ export class Category extends BaseComponent {
     }
 
     showCongratulation(): void {
-        const ovrContainer = document.createElement('div');
-        ovrContainer.className = 'ovr_win_container';
-        const headTxt = document.createElement('div');
-        headTxt.className = 'head_txt';
-        headTxt.innerHTML = 'congratulation!';
-        const resultDiv = document.createElement('div');
-        resultDiv.className = 'result';
+        const ovrContainer = createHTMLElement('div', 'ovr_win_container');
+        const headTxt = createHTMLElement('div', 'head_txt', 'congratulation!');
+        const resultDiv = createHTMLElement('div', 'resilt');
         resultDiv.innerHTML = `${this.correctCount}/${Category.MAX_COUNT_QUEST}`;
-        const miniImg = document.createElement('div');
-        miniImg.className = 'win_img';
+        const miniImg = createHTMLElement('div', 'win_img');
 
         ovrContainer.append(headTxt, resultDiv, miniImg, this.btnWrap);
-        const overlay = document.createElement('div');
-        overlay.className = 'ovr_win';
+        const overlay = createHTMLElement('div', 'ovr_win');
         overlay.append(ovrContainer);
         this.container.append(overlay);
         setTimeout(() => {
@@ -405,18 +377,13 @@ export class Category extends BaseComponent {
 
     setScoreItems = (arrayScore: Quest[]): void => {
         arrayScore.forEach((item) => {
-            const headScore: HTMLDivElement = document.createElement('div');
-            headScore.className = 'head_preview';
-            headScore.innerHTML = this.nameCategory;
-            const imgScore: HTMLDivElement = document.createElement('div');
-            imgScore.className = 'preview';
+            const headScore = createHTMLElement('div', 'head_preview', this.nameCategory);
+            const imgScore = createHTMLElement('div', 'preview');
             const rgtAnsw: IAnswer = item.rightAnswer;
             imgScore.style.backgroundImage = `url(./assets/pictures/img/${rgtAnsw.answer.imageNum}.jpg)`;
-            const scoreItem: HTMLDivElement = document.createElement('div');
-            scoreItem.className = 'score_item';
+            const scoreItem: HTMLElement = createHTMLElement('div', 'score_item');
 
-            const iteminfo: HTMLDivElement = document.createElement('div');
-            iteminfo.className = 'item_info_score';
+            const iteminfo: HTMLElement = createHTMLElement('div', 'item_info_score');
             iteminfo.innerHTML = `
                 <span>${rgtAnsw.answer.author}</span>
                 <span>${rgtAnsw.answer.name}</span>

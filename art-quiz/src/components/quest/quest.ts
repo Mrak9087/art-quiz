@@ -32,7 +32,7 @@ export class Quest extends BaseComponent {
         this.type = type;
     }
 
-    init(questImages: HTMLDivElement, arrAnswerObj: IAnswer[]): void {
+    init(questImages: HTMLElement, arrAnswerObj: IAnswer[]): void {
         this.overlay = document.createElement('div');
         this.overlay.className = 'answer_overlay ovr_hidden';
         // this.divTxt = document.createElement('div');
