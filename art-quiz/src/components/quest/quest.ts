@@ -7,9 +7,8 @@ import { AnswerType } from '../enums/enums';
 export class Quest extends BaseComponent {
     private answers: Answer[] = [];
 
-    private question = 'Кто автор картины?'; // Question;
+    private question = 'Кто автор картины?';
 
-    // private divTxt: HTMLElement;
     private questImages: HTMLElement;
 
     private questAnswer: HTMLElement;
@@ -28,22 +27,18 @@ export class Quest extends BaseComponent {
 
     constructor(type: AnswerType = AnswerType.text) {
         super('quest');
-        // this.question = 'quest1';
         this.type = type;
     }
 
     init(questImages: HTMLElement, arrAnswerObj: IAnswer[]): void {
         this.overlay = document.createElement('div');
         this.overlay.className = 'answer_overlay ovr_hidden';
-        // this.divTxt = document.createElement('div');
-        // this.divTxt.className = 'question'
 
         this.btnNext = document.createElement('div');
         this.btnNext.className = 'btn_next';
         this.btnNext.innerText = 'Next';
         this.questImages = document.createElement('div');
         this.questImages.className = 'quest_images';
-        // questImages.className = 'quest_img'
         if (questImages) {
             this.questImages.append(questImages);
         }
@@ -58,8 +53,7 @@ export class Quest extends BaseComponent {
         if (this.type === AnswerType.img) {
             this.question = `Какую картину написал ${this.rightAnswer.answer.author}?`;
         }
-        // this.divTxt.innerHTML = this.question;
-        this.node.append(this.questImages, this.questAnswer); // this.divTxt,
+        this.node.append(this.questImages, this.questAnswer);
     }
 
     getRightAnswer(): IAnswer {
@@ -110,7 +104,6 @@ export class Quest extends BaseComponent {
             `;
         ovrContainer.append(okErr, miniImg, picInfo, this.btnNext);
 
-        // this.overlay;
         this.overlay.append(ovrContainer);
         this.node.append(this.overlay);
         setTimeout(() => {
