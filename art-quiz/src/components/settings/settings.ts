@@ -3,7 +3,6 @@ import { BaseComponent } from '../baseComponent/baseComponent';
 import { ISetting } from '../interfaces/interfaces';
 import { createHTMLElement } from '../helpers/helpers';
 
-
 export class Settings extends BaseComponent {
     private readonly DIS_COLOR: string = '#ccc';
 
