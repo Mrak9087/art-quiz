@@ -5,6 +5,7 @@ import { AnswerType } from '../enums/enums';
 import { Menu } from '../menu/menu';
 import { Settings } from '../settings/settings';
 import { ISetting, IAnswerContent } from '../interfaces/interfaces';
+import { getData } from '../helpers/helpers';
 
 export class View extends BaseComponent {
     private countCategory: number;
@@ -44,8 +45,7 @@ export class View extends BaseComponent {
             timeActive: false,
             timeValue: 0,
         };
-        const res = await fetch(`./assets/pictures/images.json`);
-        const data = await res.json();
+        const data = await getData(`./assets/pictures/images.json`);
         this.images = data.slice(0);
         this.countCategory = Math.floor(this.images.length / Category.MAX_COUNT_QUEST) / 2;
         this.container = document.createElement('div');

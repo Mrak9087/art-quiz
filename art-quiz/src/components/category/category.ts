@@ -9,7 +9,7 @@ import { AnswerType } from '../enums/enums';
 import ok from '../../assets/sounds/correctanswer.mp3';
 import wrong from '../../assets/sounds/wronganswer.mp3';
 import endround from '../../assets/sounds/endround.mp3';
-import { createHTMLElement, getRandomNum } from '../helpers/helpers';
+import { createHTMLElement, getRandomNum, getData } from '../helpers/helpers';
 
 export class Category extends BaseComponent {
     static readonly MAX_COUNT_QUEST: number = 10;
@@ -99,8 +99,7 @@ export class Category extends BaseComponent {
         } else {
             this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
         }
-        const res = await fetch(`./assets/pictures/images.json`);
-        const data = await res.json();
+        const data = await getData(`./assets/pictures/images.json`);
         this.images = data.slice(0);
         this.btnHome = createHTMLElement('button', 'btn_win', 'home');
         this.btnHome.addEventListener('click', () => {
