@@ -3,6 +3,7 @@ import { Answer } from '../answer/answer';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { IAnswer } from '../interfaces/interfaces';
 import { AnswerType } from '../enums/enums';
+import { createHTMLElement } from '../helpers/helpers';
 
 export class Quest extends BaseComponent {
     private answers: Answer[] = [];
@@ -21,7 +22,7 @@ export class Quest extends BaseComponent {
 
     public rightAnswer: IAnswer;
 
-    public overlay: HTMLDivElement;
+    public overlay: HTMLElement;
 
     public btnNext: HTMLElement;
 
@@ -31,19 +32,14 @@ export class Quest extends BaseComponent {
     }
 
     init(questImages: HTMLElement, arrAnswerObj: IAnswer[]): void {
-        this.overlay = document.createElement('div');
-        this.overlay.className = 'answer_overlay ovr_hidden';
+        this.overlay = createHTMLElement('div', 'answer_overlay ovr_hidden');
 
-        this.btnNext = document.createElement('div');
-        this.btnNext.className = 'btn_next';
-        this.btnNext.innerText = 'Next';
-        this.questImages = document.createElement('div');
-        this.questImages.className = 'quest_images';
+        this.btnNext = createHTMLElement('div', 'btn_next', 'Next');
+        this.questImages = createHTMLElement('div', 'quest_images');
         if (questImages) {
             this.questImages.append(questImages);
         }
-        this.questAnswer = document.createElement('div');
-        this.questAnswer.className = 'answer_container';
+        this.questAnswer = createHTMLElement('div', 'answer_container');
         arrAnswerObj.forEach((item) => {
             const answerObj = new Answer(item.answer, item.right, this.type);
             this.answers.push(answerObj);
@@ -83,20 +79,16 @@ export class Quest extends BaseComponent {
 
     showRightAnswer(isRight: boolean) {
         this.isRightAnswered = isRight;
-        const ovrContainer = document.createElement('div');
-        ovrContainer.className = 'ovr_container';
-        const okErr = document.createElement('div');
-        okErr.className = 'ok_error';
+        const ovrContainer = createHTMLElement('div', 'ovr_container');
+        const okErr = createHTMLElement('div', 'ok_error');
         if (isRight) {
             okErr.classList.add('ok');
         } else {
             okErr.classList.add('error');
         }
-        const miniImg = document.createElement('div');
-        miniImg.className = 'mini_img';
+        const miniImg = createHTMLElement('div', 'mini_img');
         miniImg.style.cssText = `background-image:url(./assets/pictures/img/${this.rightAnswer.answer.imageNum}.jpg)`;
-        const picInfo = document.createElement('div');
-        picInfo.className = 'picture_info';
+        const picInfo = createHTMLElement('div', 'picture_info');
         picInfo.innerHTML = `
             <span>${this.rightAnswer.answer.author}</span>
             <span>${this.rightAnswer.answer.name}</span>

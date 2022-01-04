@@ -162,7 +162,6 @@ export class View extends BaseComponent {
     async categoryHandler(category: Category) {
         await this.doContainer(true);
         category.showQuest();
-        // category.showScore()
         await this.doContainer(false);
     }
 
