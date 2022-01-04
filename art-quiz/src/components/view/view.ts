@@ -1,14 +1,13 @@
 import './view.css';
 import { BaseComponent } from '../baseComponent/baseComponent';
-import { images } from '../images';
 import { Category } from '../category/category';
 import { AnswerType } from '../enums/enums';
 import { Menu } from '../menu/menu';
 import { Settings } from '../settings/settings';
-import { ISetting } from '../interfaces/interfaces';
+import { ISetting, IAnswerContent } from '../interfaces/interfaces';
 
 export class View extends BaseComponent {
-    readonly countCategory: number;
+    private countCategory: number;
 
     private categories: Category[];
 
@@ -32,18 +31,23 @@ export class View extends BaseComponent {
 
     public footer: HTMLDivElement;
 
+    private images: IAnswerContent[];
+
     constructor() {
         super('view');
-        this.countCategory = Math.floor(images.length / Category.MAX_COUNT_QUEST) / 2;
     }
 
-    init(): void {
+    async init() {
         this.setting = JSON.parse(localStorage.getItem('arqSetting')) || {
             soundActive: false,
             soundLevel: 0,
             timeActive: false,
             timeValue: 0,
         };
+        const res = await fetch(`./assets/pictures/images.json`);
+        const data = await res.json();
+        this.images = data.slice(0);
+        this.countCategory = Math.floor(this.images.length / Category.MAX_COUNT_QUEST) / 2;
         this.container = document.createElement('div');
         this.container.className = 'container';
         this.categoryContainer = document.createElement('div');

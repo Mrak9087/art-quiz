@@ -1,7 +1,6 @@
 import './category.css';
 
 import { Quest } from '../quest/quest';
-// import { images } from '../images';
 import { Answer } from '../answer/answer';
 import { IAnswer, ISetting, IStorageCategory, IAnswerContent } from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
