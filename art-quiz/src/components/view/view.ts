@@ -3,7 +3,6 @@ import { BaseComponent } from '../baseComponent/baseComponent';
 import { Category } from '../category/category';
 import { AnswerType } from '../enums/enums';
 import { Menu } from '../menu/menu';
-import { Settings } from '../settings/settings';
 import { ISetting, IAnswerContent } from '../interfaces/interfaces';
 import { getData } from '../helpers/helpers';
 
@@ -13,8 +12,6 @@ export class View extends BaseComponent {
     private categories: Category[];
 
     private menu: Menu;
-
-    private settings: Settings;
 
     private type: AnswerType = AnswerType.img;
 

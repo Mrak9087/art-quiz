@@ -14,8 +14,6 @@ export class Settings extends BaseComponent {
 
     private rangeTxt: HTMLDivElement;
 
-    private okAnswer: HTMLAudioElement;
-
     private setting: ISetting;
 
     public itemSound: HTMLDivElement;
@@ -47,7 +45,6 @@ export class Settings extends BaseComponent {
             timeActive: this.activeTime,
             timeValue: 10,
         };
-        this.okAnswer = new Audio(ok);
         this.setting = JSON.parse(localStorage.getItem('arqSetting')) || defaultSetting;
         this.activeSound = this.setting.soundActive;
         this.activeTime = this.setting.timeActive;
