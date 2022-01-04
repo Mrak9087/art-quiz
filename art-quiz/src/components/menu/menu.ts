@@ -3,7 +3,6 @@ import { BaseComponent } from '../baseComponent/baseComponent';
 import { Settings } from '../settings/settings';
 import { createHTMLElement } from '../helpers/helpers';
 
-
 export class Menu extends BaseComponent {
     private menuWrapper: HTMLDivElement;
 

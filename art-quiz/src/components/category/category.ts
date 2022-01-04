@@ -1,7 +1,7 @@
 import './category.css';
 
 import { Quest } from '../quest/quest';
-import { images } from '../images';
+// import { images } from '../images';
 import { Answer } from '../answer/answer';
 import { IAnswer, ISetting, IStorageCategory, IAnswerContent } from '../interfaces/interfaces';
 import { BaseComponent } from '../baseComponent/baseComponent';
@@ -64,8 +64,6 @@ export class Category extends BaseComponent {
 
     private nameCategory: string;
 
-    private scoreContainer: HTMLElement;
-
     private scoreItems: HTMLElement[];
 
     private scoreBtn: HTMLElement;
@@ -82,6 +80,8 @@ export class Category extends BaseComponent {
 
     private categorysStorage: IStorageCategory[];
 
+    private images: IAnswerContent[];
+
     constructor(private readonly index: number) {
         super('category');
         this.startIndex = this.index * Category.MAX_COUNT_QUEST;
@@ -94,12 +94,15 @@ export class Category extends BaseComponent {
         this.nameCategory = `Категория ${this.index + 1}`;
     }
 
-    init(container: HTMLDivElement, view: View, setting: ISetting, answerType: AnswerType = AnswerType.text): void {
+    async init(container: HTMLDivElement, view: View, setting: ISetting, answerType: AnswerType = AnswerType.text) {
         if (answerType === AnswerType.text) {
             this.categorysStorage = JSON.parse(localStorage.getItem('artArtistCategorys')) || [];
         } else {
             this.categorysStorage = JSON.parse(localStorage.getItem('artPictureCategorys')) || [];
         }
+        const res = await fetch(`./assets/pictures/images.json`);
+        const data = await res.json();
+        this.images = data.slice(0);
         this.btnHome = createHTMLElement('button', 'btn_win', 'home');
         this.btnHome.addEventListener('click', () => {
             clearTimeout(this.idTimer);
@@ -192,11 +195,11 @@ export class Category extends BaseComponent {
     toFormQuestion(): void {
         let tmpArr: Array<IAnswerContent> = [];
         if (this.answerType === AnswerType.text) {
-            tmpArr = images.slice(this.startIndex, this.endIndex);
+            tmpArr = this.images.slice(this.startIndex, this.endIndex);
         } else {
             this.startIndex = this.index * Category.MAX_COUNT_QUEST + this.PICTURE_QUIZ_START;
             this.endIndex = this.startIndex + Category.MAX_COUNT_QUEST;
-            tmpArr = images.slice(this.startIndex, this.endIndex);
+            tmpArr = this.images.slice(this.startIndex, this.endIndex);
         }
 
         tmpArr.forEach((item) => {
@@ -225,10 +228,10 @@ export class Category extends BaseComponent {
     addIncorrectAnswers(answers: IAnswer[]): void {
         let incorrectIndex = getRandomNum(0, 9);
         for (let i = 0; i < 3; i++) {
-            while (answers.find((item) => item.answer.author === images[incorrectIndex].author)) {
-                incorrectIndex = getRandomNum(0, images.length - 1);
+            while (answers.find((item) => item.answer.author === this.images[incorrectIndex].author)) {
+                incorrectIndex = getRandomNum(0, this.images.length - 1);
             }
-            answers.push({ right: false, answer: images[incorrectIndex] });
+            answers.push({ right: false, answer: this.images[incorrectIndex] });
         }
     }
 
@@ -359,9 +362,9 @@ export class Category extends BaseComponent {
 
     saveToLocalStorage(): void {
         this.categorysStorage[this.index] = {
-            correctCount:this.correctCount,
-            score:this.quests.slice(0),
-        }
+            correctCount: this.correctCount,
+            score: this.quests.slice(0),
+        };
         if (this.answerType === AnswerType.text) {
             localStorage.setItem('artArtistCategorys', JSON.stringify(this.categorysStorage));
         } else {
