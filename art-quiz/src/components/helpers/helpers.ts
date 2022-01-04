@@ -10,7 +10,7 @@ export function getRandomNum(min: number, max: number): number {
     return Math.floor(rand);
 }
 
-export async function getData(path:string){
+export async function getData(path: string) {
     const res = await fetch(path);
     const data = await res.json();
     return data;

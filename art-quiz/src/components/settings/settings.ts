@@ -1,7 +1,8 @@
 import './settings.css';
 import { BaseComponent } from '../baseComponent/baseComponent';
 import { ISetting } from '../interfaces/interfaces';
-import ok from '../../assets/sounds/correctanswer.mp3';
+import { createHTMLElement } from '../helpers/helpers';
+
 
 export class Settings extends BaseComponent {
     private readonly DIS_COLOR: string = '#ccc';
@@ -12,15 +13,15 @@ export class Settings extends BaseComponent {
 
     private activeTime = false;
 
-    private rangeTxt: HTMLDivElement;
+    private rangeTxt: HTMLElement;
 
     private setting: ISetting;
 
-    public itemSound: HTMLDivElement;
+    public itemSound: HTMLElement;
 
-    public itemTime: HTMLDivElement;
+    public itemTime: HTMLElement;
 
-    public settingBtn: HTMLDivElement;
+    public settingBtn: HTMLElement;
 
     public rangeSound: HTMLInputElement;
 
@@ -28,9 +29,9 @@ export class Settings extends BaseComponent {
 
     public rangeTime: HTMLInputElement;
 
-    public itemActiveSound: HTMLDivElement;
+    public itemActiveSound: HTMLElement;
 
-    public itemActiveTime: HTMLDivElement;
+    public itemActiveTime: HTMLElement;
 
     public btnSave: HTMLButtonElement;
 
@@ -48,41 +49,29 @@ export class Settings extends BaseComponent {
         this.setting = JSON.parse(localStorage.getItem('arqSetting')) || defaultSetting;
         this.activeSound = this.setting.soundActive;
         this.activeTime = this.setting.timeActive;
-        const itemWrapper: HTMLDivElement = document.createElement('div');
-        itemWrapper.className = 'item_wrapper';
+        const itemWrapper = createHTMLElement('div', 'item_wrapper');
         this.initItemSound();
         this.initItemTime();
         itemWrapper.append(this.itemSound, this.itemTime);
-        this.btnSave = document.createElement('button');
-        this.btnSave.className = 'btn_general btn_save';
-        this.btnSave.innerHTML = 'save';
-        const btnWrapper: HTMLDivElement = document.createElement('div');
-        btnWrapper.className = 'btn_wrapper';
+        this.btnSave = <HTMLButtonElement>createHTMLElement('button', 'btn_general btn_save', 'save');
+        const btnWrapper = createHTMLElement('div', 'btn_wrapper');
         btnWrapper.append(this.btnSave);
         this.node.append(itemWrapper, btnWrapper);
 
-        this.settingBtn = document.createElement('div');
-        this.settingBtn.className = 'btn_general setting_btn';
-        this.settingBtn.innerHTML = 'Setting';
+        this.settingBtn = createHTMLElement('div', 'btn_general setting_btn', 'Setting');
 
         this.activeSound = this.setting.soundActive;
         this.activeTime = this.setting.timeActive;
     }
 
     initItemSound(): void {
-        this.itemSound = document.createElement('div');
-        this.itemSound.className = 'item_setting item_sound';
-        this.rangeSound = document.createElement('input');
-        this.rangeSound.className = 'progress';
-        const soundLabel = document.createElement('div');
-        soundLabel.className = 'item_label sound_label';
+        this.itemSound = createHTMLElement('div', 'item_setting item_sound');
+        this.rangeSound = <HTMLInputElement>createHTMLElement('input', 'progress');
+        const soundLabel = createHTMLElement('div', 'item_label sound_label');
 
-        const soundWrapper = document.createElement('div');
-        soundWrapper.className = 'sound_wrapper';
+        const soundWrapper = createHTMLElement('div', 'sound_wrapper');
 
-        this.soundOff = document.createElement('button');
-        this.soundOff = document.createElement('button');
-        this.soundOff.className = 'sound_off';
+        this.soundOff = <HTMLButtonElement>createHTMLElement('button', 'sound_off');
 
         this.soundOff.addEventListener('click', () => {
             this.doSoundOff();
@@ -98,13 +87,10 @@ export class Settings extends BaseComponent {
 
         soundWrapper.append(this.soundOff, this.rangeSound);
 
-        this.itemActiveSound = document.createElement('div');
-        this.itemActiveSound.className = 'active_sound';
+        this.itemActiveSound = createHTMLElement('div', 'active_sound');
         this.itemActiveSound.addEventListener('click', this.changeActiveSound);
 
-        const soundTxt = document.createElement('div');
-        soundTxt.className = 'item_txt';
-        soundTxt.innerHTML = '<span>sound</span>';
+        const soundTxt = createHTMLElement('div', 'item_txt', '<span>sound</span>');
         this.itemSound.append(soundLabel, soundWrapper, this.itemActiveSound, soundTxt);
         this.rangeSound.addEventListener('input', this.changeSoundRange);
         this.changeSoundRange();
@@ -112,15 +98,11 @@ export class Settings extends BaseComponent {
     }
 
     initItemTime(): void {
-        this.itemTime = document.createElement('div');
-        this.itemTime.className = 'item_setting item_time';
-        this.rangeTime = document.createElement('input');
-        this.rangeTime.className = 'progress';
+        this.itemTime = createHTMLElement('div', 'item_setting item_time');
+        this.rangeTime = <HTMLInputElement>createHTMLElement('input', 'progress');
         this.rangeTime.addEventListener('input', this.changeTimeRange);
-        const timeLabel = document.createElement('div');
-        timeLabel.className = 'item_label time_label';
-        const timeWrapper = document.createElement('div');
-        timeWrapper.className = 'time_wrapper';
+        const timeLabel = createHTMLElement('div', 'item_label time_label');
+        const timeWrapper = createHTMLElement('div', 'time_wrapper');
         this.rangeTime.type = 'range';
         this.rangeTime.min = '5';
         this.rangeTime.max = '30';
@@ -128,17 +110,13 @@ export class Settings extends BaseComponent {
         this.rangeTime.value = this.setting.timeValue.toString();
         this.rangeTime.disabled = !this.activeTime;
 
-        this.rangeTxt = document.createElement('div');
-        this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
+        this.rangeTxt = createHTMLElement('div', '', `<span>${this.rangeTime.value}</span>`);
         timeWrapper.append(this.rangeTime, this.rangeTxt);
 
-        this.itemActiveTime = document.createElement('div');
-        this.itemActiveTime.className = 'active_sound';
+        this.itemActiveTime = createHTMLElement('div', 'active_sound');
         this.itemActiveTime.addEventListener('click', this.changeActiveTime);
 
-        const timeTxt = document.createElement('div');
-        timeTxt.className = 'item_txt';
-        timeTxt.innerHTML = '<span>time</span>';
+        const timeTxt = createHTMLElement('div', 'item_txt', '<span>time</span>');
         this.itemTime.append(timeLabel, timeWrapper, this.itemActiveTime, timeTxt);
 
         this.changeTimeRange();
@@ -156,8 +134,6 @@ export class Settings extends BaseComponent {
             this.rangeSound.style.background = `linear-gradient(to right, ${this.DIS_COLOR} 0%, ${this.DIS_COLOR} ${value}%, #fff ${value}%, white 100%)`;
         } else {
             this.rangeSound.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
-            // this.okAnswer.volume = parseFloat(this.rangeSound.value);
-            // this.okAnswer.play();
         }
     };
 
@@ -196,7 +172,6 @@ export class Settings extends BaseComponent {
         } else {
             this.rangeTime.style.background = `linear-gradient(to right, ${this.ACT_COLOR} 0%, ${this.ACT_COLOR} ${value}%, #fff ${value}%, white 100%)`;
         }
-        // this.rangeTxt.innerHTML = `<span>${this.rangeTime.value}</span>`;
     };
 
     changeActiveSound = () => {
@@ -236,7 +211,7 @@ export class Settings extends BaseComponent {
         return this.setting;
     }
 
-    private setItemActive(isActive: boolean, item: HTMLDivElement) {
+    private setItemActive(isActive: boolean, item: HTMLElement) {
         if (isActive) {
             item.innerHTML = '<div class="active_item"></div>';
         } else {
