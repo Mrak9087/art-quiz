@@ -4,7 +4,7 @@ import { Category } from '../category/category';
 import { AnswerType } from '../enums/enums';
 import { Menu } from '../menu/menu';
 import { ISetting, IAnswerContent } from '../interfaces/interfaces';
-import { getData } from '../helpers/helpers';
+import { getData, createHTMLElement } from '../helpers/helpers';
 
 export class View extends BaseComponent {
     private countCategory: number;
@@ -17,17 +17,17 @@ export class View extends BaseComponent {
 
     private setting: ISetting;
 
-    private btnHome: HTMLButtonElement;
+    private btnHome: HTMLElement;
 
-    public categoryContainer: HTMLDivElement;
+    public categoryContainer: HTMLElement;
 
-    public container: HTMLDivElement;
+    public container: HTMLElement;
 
-    public logoWrapper: HTMLDivElement;
+    public logoWrapper: HTMLElement;
 
-    public logo: HTMLDivElement;
+    public logo: HTMLElement;
 
-    public footer: HTMLDivElement;
+    public footer: HTMLElement;
 
     private images: IAnswerContent[];
 
@@ -45,29 +45,22 @@ export class View extends BaseComponent {
         const data = await getData(`./assets/pictures/images.json`);
         this.images = data.slice(0);
         this.countCategory = Math.floor(this.images.length / Category.MAX_COUNT_QUEST) / 2;
-        this.container = document.createElement('div');
-        this.container.className = 'container';
-        this.categoryContainer = document.createElement('div');
-        this.categoryContainer.className = 'category_container';
+        this.container = createHTMLElement('div', 'container');
+        this.categoryContainer = createHTMLElement('div', 'category_container');
 
-        this.btnHome = document.createElement('button');
-        this.btnHome.className = 'btn_home';
-        this.btnHome.innerHTML = 'home';
+        this.btnHome = createHTMLElement('button', 'btn_home', 'home');
         this.btnHome.addEventListener('click', async () => {
             this.showMenu();
         });
-        this.logoWrapper = document.createElement('div');
-        this.logoWrapper.className = 'logo_wrapper';
-        this.logo = document.createElement('div');
-        this.logo.className = 'logo';
+        this.logoWrapper = createHTMLElement('div', 'logo_wrapper');
+        this.logo = createHTMLElement('div', 'logo');
         this.logoWrapper.append(this.logo);
         this.categories = [];
         this.menu = new Menu();
         this.menu.init();
         this.addEventToMenu();
         this.container.append(this.logoWrapper, this.menu.node);
-        this.footer = document.createElement('div');
-        this.footer.className = 'footer';
+        this.footer = createHTMLElement('div', 'footer');
         this.footer.innerHTML = `<div class="footer_container">
                 <a class="github" href="https://github.com/Mrak9087" target="blank">Mrak9087</a>
                 <span class="rss_year">2021</span>
@@ -83,7 +76,7 @@ export class View extends BaseComponent {
             this.categories.splice(0, this.categories.length);
             for (let i = 0; i < this.countCategory; i++) {
                 const category = new Category(i);
-                category.init(this.container, this, this.setting, this.type); // , AnswerType.img
+                category.init(this.container, this, this.setting, this.type);
                 this.categories.push(category);
             }
             this.addEventToCategory();
@@ -127,8 +120,7 @@ export class View extends BaseComponent {
     }
 
     addBtnHome(): void {
-        const btnContainer = document.createElement('div');
-        btnContainer.className = 'btn_container';
+        const btnContainer = createHTMLElement('div', 'btn_container');
         btnContainer.append(this.btnHome);
         this.container.append(btnContainer);
     }

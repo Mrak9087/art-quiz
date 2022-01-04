@@ -93,7 +93,7 @@ export class Category extends BaseComponent {
         this.nameCategory = `Категория ${this.index + 1}`;
     }
 
-    async init(container: HTMLDivElement, view: View, setting: ISetting, answerType: AnswerType = AnswerType.text) {
+    async init(container: HTMLElement, view: View, setting: ISetting, answerType: AnswerType = AnswerType.text) {
         if (answerType === AnswerType.text) {
             this.categorysStorage = JSON.parse(localStorage.getItem('artArtistCategorys')) || [];
         } else {
