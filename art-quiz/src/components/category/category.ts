@@ -9,7 +9,7 @@ import { AnswerType } from '../enums/enums';
 import ok from '../../assets/sounds/correctanswer.mp3';
 import wrong from '../../assets/sounds/wronganswer.mp3';
 import endround from '../../assets/sounds/endround.mp3';
-import { createHTMLElement, getRandomNum, getData } from '../helpers/helpers';
+import { createHTMLElement, getRandomNum, getData, addZero } from '../helpers/helpers';
 
 export class Category extends BaseComponent {
     static readonly MAX_COUNT_QUEST: number = 10;
@@ -274,10 +274,6 @@ export class Category extends BaseComponent {
         clearTimeout(this.idTimer);
     }
 
-    getQuests(): Array<Quest> {
-        return this.quests;
-    }
-
     showQuest(): void {
         this.container.innerHTML = '';
         this.wrapper.innerHTML = '';
@@ -340,7 +336,7 @@ export class Category extends BaseComponent {
 
     setSecond(quest: Quest) {
         this.second--;
-        this.questTime.innerHTML = this.addZero(this.second);
+        this.questTime.innerHTML = addZero(this.second);
         if (!this.second) {
             if (this.setting.soundActive) {
                 this.wrongAnswer.play();
@@ -352,10 +348,6 @@ export class Category extends BaseComponent {
                 this.setSecond(quest);
             }, 1000);
         }
-    }
-
-    addZero(n: number): string {
-        return (n < 10 ? '0' : '') + n;
     }
 
     saveToLocalStorage(): void {

@@ -187,14 +187,6 @@ export class Settings extends BaseComponent {
         this.changeTimeRange();
     };
 
-    getActiveSound(): boolean {
-        return this.activeSound;
-    }
-
-    getActiveTime(): boolean {
-        return this.activeTime;
-    }
-
     saveSettings() {
         const objSetting = {
             soundActive: this.activeSound,

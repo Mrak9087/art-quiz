@@ -52,10 +52,6 @@ export class Quest extends BaseComponent {
         this.node.append(this.questImages, this.questAnswer);
     }
 
-    getRightAnswer(): IAnswer {
-        return this.rightAnswer;
-    }
-
     answered(isRight: boolean): void {
         this.isAnswered = true;
         this.showRightAnswer(isRight);
@@ -67,10 +63,6 @@ export class Quest extends BaseComponent {
 
     getAnswers(): Array<Answer> {
         return this.answers;
-    }
-
-    setQuestion(question: string): void {
-        this.question = question;
     }
 
     getQuestion(): string {
@@ -101,13 +93,5 @@ export class Quest extends BaseComponent {
         setTimeout(() => {
             this.overlay.classList.remove('ovr_hidden');
         }, 10);
-    }
-
-    clearAnswered() {
-        this.isAnswered = false;
-    }
-
-    getIsRightAnswered(): boolean {
-        return this.isRightAnswered;
     }
 }

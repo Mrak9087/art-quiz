@@ -15,3 +15,7 @@ export async function getData(path: string) {
     const data = await res.json();
     return data;
 }
+
+export function addZero(n: number): string {
+    return (n < 10 ? '0' : '') + n;
+}

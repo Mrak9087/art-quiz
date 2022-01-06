@@ -34,6 +34,6 @@ module.exports = {
     "prettier/prettier": "error",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    // "@typescript-eslint/no-explicit-any": "off"
   },
 };
