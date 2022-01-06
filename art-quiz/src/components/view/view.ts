@@ -71,20 +71,18 @@ export class View extends BaseComponent {
         this.node.append(this.container, this.footer);
     }
 
-    createCategories(): Promise<void> {
-        return new Promise((resolve) => {
-            this.categories.splice(0, this.categories.length);
-            for (let i = 0; i < this.countCategory; i++) {
-                const category = new Category(i);
-                category.init(this.container, this, this.setting, this.type);
-                this.categories.push(category);
-            }
-            this.addEventToCategory();
-            this.categories.forEach((item) => {
-                this.categoryContainer.append(item.node);
-            });
-            resolve();
+    createCategories(){
+        this.categories.splice(0, this.categories.length);
+        for (let i = 0; i < this.countCategory; i++) {
+            const category = new Category(i);
+            category.init(this.container, this, this.setting, this.type);
+            this.categories.push(category);
+        }
+        this.addEventToCategory();
+        this.categories.forEach((item) => {
+            this.categoryContainer.append(item.node);
         });
+            
     }
 
     addEventToCategory(): void {
@@ -131,7 +129,7 @@ export class View extends BaseComponent {
         this.categoryContainer.innerHTML = '';
         this.addBtnHome();
         this.container.append(this.categoryContainer);
-        await this.createCategories();
+        this.createCategories();
         await this.doContainer(false);
     }
 
