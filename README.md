@@ -1,2 +1,1 @@
-# mrak9087-JSFE2021Q3
-Private repository for @mrak9087
+# [art-quiz](https://mrak9087.github.io/art-quiz/art-quiz/)
